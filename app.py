@@ -23,7 +23,7 @@ def makeDemo():
 	for p in xrange(1,5):
 		print 'page ' + str(p)
 		for x in explore( page = p):
-			html+= x['title'] + '<br><img src="' + x['photo'].replace('thumb_90', 'thumb_600') +'"/><br>'
+			html+= x['title'] + '<br>' + x['address'] + '<br><img src="' + x['photo'].replace('thumb_90', 'thumb_600') +'"/><br>'
 	return html
 
 
