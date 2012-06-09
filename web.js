@@ -1,11 +1,26 @@
 var express = require('express'),
+fs = require('fs'),
 request = require('request'),
-async = require('async');
+async = require('async'),
+path = require('path');
+
+var WEBROOT = path.join(path.dirname(__filename), '/webroot');
+
 
 var app = express.createServer(express.logger());
 
+app.use('/static',express.static(WEBROOT));
+app.use(express.bodyParser());
+
+
 app.get('/', function(request, response) {
-  
+	fs.readFile(WEBROOT+'/index.html', function (err, data) {
+        response.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+        response.write(data);
+        response.end();
+    });  
 });
 
 var port = process.env.PORT || 5000;

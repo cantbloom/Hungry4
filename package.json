@@ -4,7 +4,8 @@
   "dependencies": {
     "express": "2.5.x",
     "async": "0.1.22",
-    "request": "2.9.202"
+    "request": "2.9.202",
+    "path": "0.4.9"
   },
   "engines": {
     "node": "0.6.x"
