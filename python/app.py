@@ -5,18 +5,17 @@ app = flask.Flask(__name__)
 def index():
 	return makeDemo()
 
-def explore(where = None, page = 0):
+def explore(where = None, page = 1):
 	payload = {
-		'authenticity_token' : 'eIZuEH8NOVjXUGdHH676SsGBDIKtKorqHTmZ31rLhRY=',
-		'ajax' : 1,
-		'page': page,
-		'loc' : '641 O\'Farrell St, San Francisco, CA 94109, USA',
-	}
-	r = requests.get("http://www.foodspotting.com/explore", params=payload)
-	#	pattern = #re.compile('^Sightings') #re.compile('^Sightings \= \[\{.*?\}\]$')
-	t = re.search(r'Sightings \= \[\{.*\}\]', r.text)
-
-	return json.loads(t.group(0)[12:])
+            'authenticity_token' : '',
+            'ajax' : 1,
+            'page': page,
+            'loc' : '641 O\'Farrell St, San Francisco, CA 94109, USA',
+    }
+    r = requests.post("http://www.foodspotting.com/explore", params=payload)
+    #	pattern = #re.compile('^Sightings') #re.compile('^Sightings \= \[\{.*?\}\]$')
+    t = re.search(r'Sightings \= (\[\{.*\}\])', r.text)
+    return json.loads(t.group(1))
 
 def makeDemo():
 	html = ""
