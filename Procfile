@@ -1,1 +1,1 @@
-web: python app.py
+web: node web.js
