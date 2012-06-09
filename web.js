@@ -15,11 +15,16 @@ app.listen(port, function() {
 
 function getGoogleCount(query, callback){
 	console.log('a')
-	request('http://www.bing.com/search?q='+query, function (error, response, body) {
+	var jar = request.jar(),
+	cookie1 = request.cookie('GDSESS=ID=2ad3ab95806754c7:TM=1339232716:C=c:IP=98.234.85.34-:S=ADSvE-dVGVOssyow8i_I3Vm_32cnA0-RMQ');
+	cookie2 = request.cookie('NID=60=jiNAHi1dtuNVKFNcN-Yu2h8ueLyyiqMlQMDycMzYlxxi0H9A9T7VPpIbuA5fTidmiqX1uqA2Ascoy_ufV-zY6U4hvuH0QIgwMPdoQyQuxpb9BTnxbmi_yPo_vuPyOBUG')
+	jar.add(cookie1);
+	jar.add(cookie2);
+	request({url:'http://www.google.com/search?q='+query, jar:jar}, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-		var myRegexp = /id\="count">(.*)? results/;
-		var match = myRegexp.exec(body);
-	  	console.log(parseInt(match[1].replace(/,/g,'')));
+		//var myRegexp = /id\="count">(.*)? results/;
+		//var match = myRegexp.exec(body);
+	  	//console.log(parseInt(match[1].replace(/,/g,'')));
 	    console.log(query)
 	    //callback(null, count);
 	    return 
@@ -38,7 +43,7 @@ function getRatios(query, callback){
 
 
 var x = 0;
-for (i=0; i<210; i++){
+for (i=0; i<1000; i++){
 	getGoogleCount(i);
 }
 //getRatios('samosa',null);
