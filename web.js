@@ -38,7 +38,7 @@ function getRatios(query, callback){
 
 
 var x = 0;
-for (i=0; i<1000; i++){
+for (i=0; i<210; i++){
 	getGoogleCount(i);
 }
 //getRatios('samosa',null);
