@@ -3,7 +3,7 @@ request = require('request'),
 async = require('async');
 
 var app = express.createServer(express.logger());
-//	
+
 app.get('/', function(request, response) {
   
 });
@@ -20,7 +20,7 @@ function getGoogleCount(query, callback){
 	cookie2 = request.cookie('NID=60=jiNAHi1dtuNVKFNcN-Yu2h8ueLyyiqMlQMDycMzYlxxi0H9A9T7VPpIbuA5fTidmiqX1uqA2Ascoy_ufV-zY6U4hvuH0QIgwMPdoQyQuxpb9BTnxbmi_yPo_vuPyOBUG')
 	jar.add(cookie1);
 	jar.add(cookie2);
-	request({url:'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q='+query, jar:jar}, function (error, response, body) {
+	request({url:'http://ajax.googleapis.com/ajax/services/search/web?_=1339237710608&v=1.0&q='+query, jar:jar}, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 		//var myRegexp = /id\="count">(.*)? results/;
 		//var match = myRegexp.exec(body);
@@ -41,12 +41,7 @@ function getGoogleCount(query, callback){
 function getRatios(query, callback){
 	async.map([query, query + ' spicy', query + ' sweet', query + ' ethnic'], getGoogleCount, function(err, results){
     	console.log(results, err)
+    	//todo calc ratios
 	});
 }
 
-
-var x = 0;
-for (i=0; i<1000; i++){
-	getGoogleCount(i);
-}
-//getRatios('samosa',null);
