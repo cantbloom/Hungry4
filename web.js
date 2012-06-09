@@ -3,7 +3,7 @@ request = require('request'),
 async = require('async');
 
 var app = express.createServer(express.logger());
-//http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=pasta
+//	
 app.get('/', function(request, response) {
   
 });
@@ -20,12 +20,15 @@ function getGoogleCount(query, callback){
 	cookie2 = request.cookie('NID=60=jiNAHi1dtuNVKFNcN-Yu2h8ueLyyiqMlQMDycMzYlxxi0H9A9T7VPpIbuA5fTidmiqX1uqA2Ascoy_ufV-zY6U4hvuH0QIgwMPdoQyQuxpb9BTnxbmi_yPo_vuPyOBUG')
 	jar.add(cookie1);
 	jar.add(cookie2);
-	request({url:'http://www.google.com/search?q='+query, jar:jar}, function (error, response, body) {
+	request({url:'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q='+query, jar:jar}, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 		//var myRegexp = /id\="count">(.*)? results/;
 		//var match = myRegexp.exec(body);
 	  	//console.log(parseInt(match[1].replace(/,/g,'')));
+	  	var json = JSON.parse(response.body),
+	    count = json.responseData.cursor.estimatedResultCount;
 	    console.log(query)
+	    console.log(count)
 	    //callback(null, count);
 	    return 
 	  }
