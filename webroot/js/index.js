@@ -216,5 +216,6 @@ function nextImage(vector){
 			}
 		}
 	}
-	return FOOD[max_item]; 
+
+	return max_item; 
 }
