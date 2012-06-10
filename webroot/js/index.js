@@ -37,11 +37,12 @@ $(function(){
 		CURRENT_ITEM.vote = 1 // 1 for up
 		NUM_POS_VOTES += 1;
 		updateUserVector(CURRENT_ITEM.ratio)
+		loadNext();
 	})
 
 	$downVote.click(function(){
 		CURRENT_ITEM.vote = 0 // 0 for down
-		updateUserVector()
+		loadNext();
 	})
 
 
@@ -158,7 +159,7 @@ function transitionToImages(){
 function loadNext(){
 	var item = nextImage(USER_VECTOR);
 	item.viewed = true;
-	swapPhoto(item.photo);
+	swapPhoto(item);
 
 	if ($photoContainer.css('display') == 'none'){
 		transitionToImages();
@@ -196,23 +197,25 @@ function cos (v1, v2) {
 }
 
 
-function updateUserVector(newVecotr){
-	USER_VECTOR.map(function(value, index){
+function updateUserVector(newVector){
+	USER_VECTOR = USER_VECTOR.map(function(value, index){
 		return value + 1/NUM_POS_VOTES*newVector[index] //mean of all past pos votes
 	})
+	console.log(USER_VECTOR);
 }
 
 function nextImage(vector){
 	var max = null,
 	max_item = null;
 	for (item in FOOD) {
-		var val = cos(item, vector);
+		var val = cos(FOOD[item].ratio, vector);
 		if (val > max) {
-			if !item.viewed {
-				max_item = item;
+			if (!FOOD[item].viewed) {
+				max_item = FOOD[item];
 				max = val;
 			}
 		}
 	}
+	console.log(max_item)
 	return max_item; 
 }
