@@ -83,10 +83,6 @@ app.listen(port, function() {
 });
 
 function latLngFrmAddr(addr, callback) {
-	callback([37.7749295,-122.4194155]);
-	return
-
-	//^^^ REMOVE LATER
 	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?address="; 
 	var URL = APIurl + encodeURIComponent(addr) + "&sensor=true";
 	//console.log(URL);
@@ -111,10 +107,7 @@ function latLngFrmAddr(addr, callback) {
 // lat/long to addr
 
 function addrFrmlatLng(lat, lng, callback) {
-	callback("San Francisco");
-	return
 
-	//^^^ REMOVE LATER
 	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="; 
 	var URL = APIurl + encodeURIComponent(lat + "," + lng) + "&sensor=true";
 	//console.log(URL);
