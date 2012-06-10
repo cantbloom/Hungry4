@@ -15,10 +15,10 @@ $(function(){
 	$useCurrentButton = $('#useCurrentLocation');
 	$voteContainer = $('#vote-container');
 	$currentPhoto = $('#current-photo');
+	$preload = $('#preload');
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
-	$tumblrButton = $('#tumblrButton');
 	$map = $('#map');
 	$want = $('#want');
 	$bg = $('#bg');
@@ -28,7 +28,6 @@ $(function(){
 		$this = $(this);
 		$('.radius-option.selected').removeClass('selected');
 		$this.addClass('selected');
-		
 	})
 
 	$useCurrentButton.click(function(){
@@ -50,7 +49,6 @@ $(function(){
 			NUM_POS_VOTES += 1;
 			updateUserVector(CURRENT_ITEM.ratio)
 			$voteContainer.addClass('disabled')
-			$currentPhoto.fadeOut(0)
 			loadNext();
 		}
 	})
@@ -59,14 +57,16 @@ $(function(){
 		if (!$voteContainer.hasClass('disabled')){
 			CURRENT_ITEM.vote = 0 // 0 for down
 			$voteContainer.addClass('disabled')
-			$currentPhoto.fadeOut(0)
 			loadNext();
 		}
 	})
 
-	$currentPhoto.load(function(){
-		$currentPhoto.fadeIn()
-		$voteContainer.removeClass('disabled')
+	$preload.load(function(){
+		$currentPhoto.fadeOut(50, function(){
+			$currentPhoto.attr('src', CURRENT_ITEM.photo).fadeIn(50, function(){
+				$voteContainer.removeClass('disabled')
+			});
+		})	
 	})
 
 	$want.click(function(){
@@ -103,13 +103,7 @@ $(function(){
    		hide: 'click',
    		api: {
 			beforeShow: function(){
-				//tumblr button
-				var tumblr_photo_source = CURRENT_ITEM.photo,
-				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
-				tumblr_photo_click_thru = 'http://compeat.herokuapp.com',
-				href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru);
-
-				$('#tumblrButton').attr('href', href);
+				
 
 				//map
 				var mapSrc = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng, CURRENT_ITEM.title);
@@ -149,6 +143,20 @@ $(function(){
 				beforeShow: function(){
 				// Fade in the modal "blanket" using the defined show speed
 				$('#overlay').fadeIn(this.options.show.effect.length);
+				
+				//tumblr button
+				var tumblr_photo_source = CURRENT_ITEM.photo,
+				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
+				tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
+				href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru);
+				$('#tumblrButton').attr('href', href);
+
+				//twitter
+				var twitter_text = CURRENT_ITEM.title +' from Hungry4';
+				$('#twitterButton').attr('data-url', CURRENT_ITEM.photo).attr('data-text', twitter_text);
+
+				
+				//gogole maps
 				var src = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng);
 				$('#map_img').attr('src', src);
 				var href = 'http://www.yelp.com/search?find_desc='+ CURRENT_ITEM.place
@@ -315,9 +323,8 @@ function loadNext(){
 
 function swapPhoto(item){
 	CURRENT_ITEM = item;
-	$currentPhoto.attr('src', item.photo);
+	$preload.attr('src', item.photo);
 	$photoCaption.html('The "'+item.dish+'"');
-	$currentPhoto.css('backgroundImage', 'url('+item.photo+')')
 }
 
 function dotProduct (v1, v2){
@@ -397,13 +404,15 @@ function makeWantTip(){
 	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
 	html += makeTumblrButton();
 	html += makeYelpButton();
+	html +=makeTumblrButton();
+	//html +=makeTwitterButton();
 	return html
 }
 
 function getMap(lat, lng) {
 	var loc = lat + "," + lng;
 	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" 
-	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" 
+	+ loc + "&zoom=14&size=400x400&markers=color:red%7Clabel:S%7C" 
 	+ loc + "&sensor=true";
 	return url;
   }
@@ -428,11 +437,16 @@ function makeYelpButton() {
 function makeTumblrButton(){
 	var tumblr_photo_source = CURRENT_ITEM.photo,
 	tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
-	tumblr_photo_click_thru = 'http://compeat.herokuapp.com',
+	tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
 	href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru),
 	title = "Share on Tumblr",
 	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;";
 
 	//console.log(tumblr_photo_source);
 	return '<a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a>'
+}
+
+function makeTwitterButton(){
+	var text = CURRENT_ITEM.title +' from Hungry4';
+	return '<a id="twitterButton" href="https://twitter.com/share" class="twitter-share-button" data-url="'+CURRENT_ITEM.photo+'" data-text="'+text+'" data-via="Hungry4App">Tweet</a>'
 }
