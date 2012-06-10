@@ -13,6 +13,7 @@ $(function(){
 	$searchButton = $('#search');
 	$radiusOptions = $('.radius-option');
 	$useCurrentButton = $('#useCurrentLocation');
+	$voteContainer = $('#vote-container');
 	$currentPhoto = $('#current-photo');
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
@@ -44,15 +45,28 @@ $(function(){
 	})
 
 	$upVote.click(function(){
-		CURRENT_ITEM.vote = 1 // 1 for up
-		NUM_POS_VOTES += 1;
-		updateUserVector(CURRENT_ITEM.ratio)
-		loadNext();
+		if (!$voteContainer.hasClass('disabled')){
+			CURRENT_ITEM.vote = 1 // 1 for up
+			NUM_POS_VOTES += 1;
+			updateUserVector(CURRENT_ITEM.ratio)
+			$voteContainer.addClass('disabled')
+			$currentPhoto.fadeOut(0)
+			loadNext();
+		}
 	})
 
 	$downVote.click(function(){
-		CURRENT_ITEM.vote = 0 // 0 for down
-		loadNext();
+		if (!$voteContainer.hasClass('disabled')){
+			CURRENT_ITEM.vote = 0 // 0 for down
+			$voteContainer.addClass('disabled')
+			$currentPhoto.fadeOut(0)
+			loadNext();
+		}
+	})
+
+	$currentPhoto.load(function(){
+		$currentPhoto.fadeIn()
+		$voteContainer.removeClass('disabled')
 	})
 
 	$want.click(function(){
@@ -351,8 +365,8 @@ function nextImage(vector){
 
 function getMap(lat, lng, biz_name) {
 	var loc = lat + "," + lng;
-	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" \
-	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" \
+	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" 
+	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" 
 	+ loc + "&sensor=true";
     var myOptions = {
       center: new google.maps.LatLng(lat, lng),

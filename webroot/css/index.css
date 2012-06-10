@@ -206,6 +206,10 @@ button:active,#vote-container>div:active{
 	filter:alpha(opacity=5);
 }
 
+.disable{
+	
+}
+
 #photo-caption{
 	position: absolute;
 	top: 0px;
