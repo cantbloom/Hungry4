@@ -112,12 +112,12 @@
 	margin:auto;
 }
 
-button:active,#vote-container>div:active{
-	box-shadow: 0px 0px 5px #abb inset;
+button:active,#vote-container>div:active,.radius-option:active,#search:active{
+	box-shadow: 0px 0px 5px #fff inset;
 }
 
 #radius-options{
-	margin: 5px 0px;
+	margin: 28px 0px -4px 0px;:;
 	display: block;
 }
 .radius-option{
@@ -308,6 +308,11 @@ button:active,#vote-container>div:active{
 #yelpLogo {
 	margin:2px;
 	vertical-align: middle;	
+	border: 1px #a90329 solid;
+	padding: 4px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 	a:link {text-decoration:none;}
 	a:visited {text-decoration:none;}
 	a:hover {text-decoration:none;}
