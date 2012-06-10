@@ -153,7 +153,7 @@ function magnitude (v){
 	return Math.sqrt(value);
 }
 
-function cs (v1, v2) {
+function cos (v1, v2) {
 	if (magnitude(v1) == 0 || magnitude(v2) ==0){
 		return 0;
 	}

@@ -112,7 +112,7 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 				payload_arr[i] = {
 					'authenticity_token' : '',
 					'ajax' : 1,
-					'page': i +1,
+					'page': i + 1,
 					'sw' : String(box['sw']),
 					'ne' : String(box['ne']),
 				}; 
@@ -120,6 +120,7 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 			async.map(payload_arr, getFoodSpot, function(error, results) {
 				sightings = []
 				for (var item in results) {
+					
 					sightings.push(results[item]);
 				}
 				callback(sightings);
