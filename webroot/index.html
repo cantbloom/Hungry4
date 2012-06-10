@@ -20,13 +20,24 @@
 				Hungry4
 			</div>
 			<div id="location-container" class="">
-				<input id="location" placeholder="Where are you hungry?"/> <button id="useCurrentLocation">X</button>
+				<input id="location" placeholder="Where are you hungry?"/>
+					 <button id="useCurrentLocation">
+						<img src="/static/images/loc_icon.png" ALT = "Use current location" id = "loc_icon" class = "icon">
+					</button>
 				<ul id="radius-options" class="cf">
-					<li class="radius-option selected" value='5'>Walking</li>
-					<li class="radius-option" value='20'>Biking</li>
-					<li class="radius-option" value='50'>Driving</li>
+					<li class="radius-option selected" value='5'>
+						<img src="/static/images/walking_icon.svg" ALT = "Walking" id = "walking_icon" class = "icon">
+					</li>
+					<li class="radius-option" value='20'>
+						<img src="/static/images/bike_icon.svg" ALT = "Biking" id = "bike_icon" class = "icon" >
+					</li>
+					<li class="radius-option" value='50'>
+						<img src="/static/images/car_icon.svg" ALT = "Driving" id = "car_icon" class = "icon" >
+					</li>
 				</ul>
-				<button id="search" value="Find me food"> Find me food!</button>
+				<button id="search" value="Find me food"> 
+					Find me food! <img src="/static/images/food_icon.png" id = "food_icon" class = "icon">
+				</button>
 			</div>
 
 			<div id="photo-container" class="">

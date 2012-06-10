@@ -68,9 +68,8 @@ body{
 	vertical-align: middle
 }
 #useCurrentLocation{
-	font-size: 15px;
-	width: 150px;
-	height: 40px;
+	width: 35px;
+	height: 35px;
 	vertical-align: middle
 }
 
@@ -79,10 +78,25 @@ body{
 	font-size: 15px;
 	width: 150px;
 	height: 40px;
-	color:#fff;
+	color:#000000;
 	vertical-align: middle;
 	border:none;
 	cursor: pointer;
+}
+
+.icon {
+	width:64;
+	height:64;
+}
+
+#loc_icon {
+	width:25;
+	height:25;
+}
+
+#food_icon {
+	width:32;
+	height:32;
 }
 
 button:active{
