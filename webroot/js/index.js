@@ -167,7 +167,7 @@ $(function(){
 				var src = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng);
 				$('#map_img').attr('src', src);
 				var href = 'http://www.yelp.com/search?find_desc='+ CURRENT_ITEM.place
-						+ '&find_loc=' + CURRENT_ITEM.address;
+						+ '&find_loc=' + $(CURRENT_ITEM.address).text();
 				$('#yelpButton').attr('href', href);
 			},
 			beforeHide: function(){
@@ -230,7 +230,7 @@ function getGoogleCount(query, callback){
 
 function getRatio(item, callback){
 	var query = item.dish,
-	flavors = ['spicy', 'meat', 'fish', 'ethnic', 'breakfast', 'lunch', 'dinner'].map(function(item){return query + ' ' + item});
+	flavors = ['spicy', 'meat', 'fish', 'ethnic', 'breakfast', 'lunch', 'dinner', 'hipster'].map(function(item){return query + ' ' + item});
 	flavors.unshift(query) 
 
 	async.map(flavors, getGoogleCount, function(err, results){
