@@ -1,0 +1,200 @@
+body{
+	background: url(../images/diamond_upholstery.png);
+	background-position: initial initial;
+	background-repeat: initial initial;
+}
+
+/* For modern browsers */
+.cf:before,
+.cf:after {
+    content:"";
+    display:table;
+}
+
+.cf:after {
+    clear:both;
+}
+
+/* For IE 6/7 (trigger hasLayout) */
+.cf {
+    *zoom:1;
+}
+
+#page-container{
+	width:100%;
+}
+
+#content-container{
+	position: relative;
+	width:590px;
+	margin: 5px auto;
+}
+
+#title{
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	font-size:50px;
+	font-weight:bold;
+	color: #000;
+	font-family:arial;
+	text-align:center;
+}
+#location-container{
+	position: absolute;
+	top:50px;
+	left:0px;
+	padding:20px;
+	width:580px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	background-color: rgba(100,100,100, .5);
+	z-index:100;
+}
+
+#location{
+	height: 40px;
+	width: 425px;
+	border: none;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 0 5px #666 inset;
+	-moz-box-shadow: 0 0 5px #666 inset;
+	box-shadow: 0 0 5px #666 inset;
+	font-size: 23px;
+	text-indent: 2px;
+	vertical-align: middle
+}
+#useCurrentLocation{
+	font-size: 15px;
+	width: 150px;
+	height: 40px;
+	vertical-align: middle
+}
+
+#search{
+	background: #006e2e; /* Old browsers */
+	font-size: 15px;
+	width: 150px;
+	height: 40px;
+	color:#fff;
+	vertical-align: middle;
+	border:none;
+	cursor: pointer;
+}
+
+button:active{
+	box-shadow: 0px 0px 5px #abb inset;
+}
+
+#radius-options{
+	margin: 5px 0px;
+	display: block;
+}
+.radius-option{
+	padding:5px 8px;
+	margin: 2px;
+	float: left;
+	font-size:18px;
+	cursor: pointer;
+	color:#fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: #00b7ea; /* Old browsers */
+	background: -moz-linear-gradient(top, #00b7ea 0%, #009ec3 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#00b7ea), color-stop(100%,#009ec3)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #00b7ea 0%,#009ec3 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #00b7ea 0%,#009ec3 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #00b7ea 0%,#009ec3 100%); /* IE10+ */
+	background: linear-gradient(top, #00b7ea 0%,#009ec3 100%); /* W3C */
+}
+
+.radius-option.selected, .radius-option:active, .vote.selected,.vote:active {
+	background: #3f4c6b; /* Old browsers */
+	background: -moz-linear-gradient(top, #3f4c6b 0%, #3f4c6b 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f4c6b), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* IE10+ */
+	background: linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* W3C */
+}
+
+.invisible{
+	opacity: 0;
+	-moz-opacity: 0;
+	filter:alpha(opacity=0);
+	visibility: hidden;
+}
+
+#photo-container{
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index:10;
+}
+
+#current-photo{
+	width:590;
+	height:590;
+	background: url(http://s3.amazonaws.com/foodspotting-ec2/reviews/971798/thumb_600.jpg?1319227414);
+	background-position: initial initial;
+	background-repeat: initial initial;
+}	
+
+#current-photo::before {
+content: "";
+position: absolute;
+z-index: -1;
+top: 10px;
+bottom: 10px;
+left: 0;
+right: 0;
+-webkit-box-shadow: 0 0 15px 
+rgba(0, 0, 0, 0.6);
+-moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+box-shadow: 0 0 15px 
+rgba(0, 0, 0, 0.6);
+-webkit-border-radius: 0.1;
+-moz-border-radius: 0.1;
+-ms-border-radius: 0.1;
+-o-border-radius: 0.1;
+border-radius: 0.1;
+}
+
+#vote-container{
+	position: absolute;
+	top: 10px;
+	left: -200px;
+	width: 200px;
+}
+
+.vote{
+	padding:5px;
+	margin: 2px 0px 2px 2px;
+	-webkit-border-radius: 3px 0px 0px 3px;
+	-moz-border-radius: 3px 0px 0px 3px;
+	border-radius: 3px 0px 0px 3px;
+	float: right;
+	font-size:26px;
+	cursor: pointer;
+	color:#fff;
+}
+#vote-up{
+	background: #006e2e; /* Old browsers */
+}
+
+#vote-down{
+	background: #3f4c6b; /* Old browsers */
+}
+ .vote.selected,.vote:active {
+	background: #3f4c6b; /* Old browsers */
+	background: -moz-linear-gradient(top, #3f4c6b 0%, #3f4c6b 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f4c6b), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* IE10+ */
+	background: linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* W3C */
+}

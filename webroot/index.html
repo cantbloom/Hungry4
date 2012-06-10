@@ -1,1 +1,51 @@
-hello world
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>What are you hungry for?</title>
+
+	<meta name="title" content="">
+	<meta name="description" content="">
+
+	<link rel="stylesheet" type="text/css" href="static/css/reset.css?v=1">
+	<link rel="stylesheet" type="text/css" href="static/css/index.css?v=1">
+</head>
+<body>
+	<div id="page-container">
+		<div id="content-container" class='cf'>
+			<div id="title">
+				Hungry4
+			</div>
+			<div id="location-container" class="">
+				<input id="location" placeholder="Where are you hungry?"/> <button id="useCurrentLocation">Use current location</button>
+				<ul id="radius-options" class="cf">
+					<li class="radius-option selected" value='2'>2 blocks</li>
+					<li class="radius-option" value='4'>4 blocks</li>
+					<li class="radius-option" value='10'>1 mile</li>
+					<li class="radius-option" value='50'>5 miles</li>
+				</ul>
+				<button id="search" value="Find me food"> Find me food!</button>
+			</div>
+
+			<div id="photo-container" class="">
+				<div id="current-photo">
+
+				</div>
+
+				<div id="vote-container">
+					<div id="vote-up" class="vote">Hmm, tasty</div>
+					<div id="vote-down" class="vote">Something else, please</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+
+<script src='static/js/jquery.min.js?v=2'></script>
+<script src='static/js/async.js?v=1'></script>
+<script src='static/js/jquery.transit.min.js?v=1'></script>
+<script src='static/js/index.js?v=2'></script>
+</body>
+</html>

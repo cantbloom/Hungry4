@@ -39,7 +39,7 @@ app.get('/foodMe', function(request, response) {
 			'Content-Type': 'application/json'
 		});
 		//console.log(JSON.stringify(results));
-		response.write(JSON.stringify(results));
+		response.write(JSON.stringify(results[0]));
 		response.end();
 	});
 });
@@ -48,38 +48,6 @@ var port = process.env.PORT || 5000;
 app.listen(port, function() {
 	console.log("Listening on " + port);
 });
-
-function getGoogleCount(query, callback){
-	console.log('a')
-	var jar = request.jar(),
-	cookie1 = request.cookie('GDSESS=ID=2ad3ab95806754c7:TM=1339232716:C=c:IP=98.234.85.34-:S=ADSvE-dVGVOssyow8i_I3Vm_32cnA0-RMQ');
-	cookie2 = request.cookie('NID=60=jiNAHi1dtuNVKFNcN-Yu2h8ueLyyiqMlQMDycMzYlxxi0H9A9T7VPpIbuA5fTidmiqX1uqA2Ascoy_ufV-zY6U4hvuH0QIgwMPdoQyQuxpb9BTnxbmi_yPo_vuPyOBUG')
-	jar.add(cookie1);
-	jar.add(cookie2);
-	request({url:'http://ajax.googleapis.com/ajax/services/search/web?_=1339237710608&v=1.0&q='+query, jar:jar}, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-	  	var json = JSON.parse(response.body),
-	  	count = json.responseData.cursor.estimatedResultCount;
-	  	console.log(query)
-	  	console.log(count)
-	    //callback(null, count);
-	    return 
-	}
-	  //callback('error wit google search '+ query);
-	  console.log(query)
-	  return
-	})
-}
-
-function getRatios(query, callback){
-	async.map([query, query + ' spicy', query + ' sweet', query + ' ethnic'], getGoogleCount, function(err, results){
-		console.log(results, err)
-    	//todo calc ratios
-    });
-}
-
-
-// address to lat/long
 
 function latLngFrmAddr(addr, callback) {
 	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?address="; 
@@ -172,6 +140,9 @@ function getFoodSpot(payload, callback) {
   				var json = JSON.parse(sightings);
   				for (var item in json) {
   					json[item].photo = json[item].photo.replace('thumb_90', 'thumb_600');
+  					var dishAndPlace = json[item].title.split(' @ ');
+  					json[item].dish = dishAndPlace[0];
+  					json[item].place = dishAndPlace[1];
   					//console.log(json[item]);
   				}
 
