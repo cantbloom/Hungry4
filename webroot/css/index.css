@@ -68,9 +68,8 @@ body{
 	vertical-align: middle
 }
 #useCurrentLocation{
-	font-size: 15px;
-	width: 150px;
-	height: 40px;
+	width: 35px;
+	height: 35px;
 	vertical-align: middle
 }
 
@@ -79,10 +78,24 @@ body{
 	font-size: 15px;
 	width: 150px;
 	height: 40px;
-	color:#fff;
+	color:#000000;
 	vertical-align: middle;
 	border:none;
 	cursor: pointer;
+}
+
+.icon {
+	width:64;
+	height:64;
+}
+
+#loc_icon {
+	margin:auto;
+}
+
+#loc_icon, #food_icon {
+	width:25;
+	height:25;
 }
 
 button:active{
@@ -183,7 +196,7 @@ button:active{
 	top: 0px;
 	width: 590px;
 	height:25px;
-	text-align: right;
+	text-align: center;
 	color:#fff;
 	font-size:25px;
 	-webkit-transition: opacity .5s ease;
@@ -196,12 +209,18 @@ button:active{
 .vote{
 	padding:5px;
 	float: left;
-	font-size:26px;
+	font-size:20px;
 	cursor: pointer;
 	color:#fff;
 	height:90px;
 	width:100px;
 }
+
+#like_icon, #dislike_icon {
+	width:45;
+	height:45;
+}
+
 #vote-up{
 	background: #006e2e; /* Old browsers */
 }

@@ -15,6 +15,7 @@ $(function(){
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
+	$choose = $('#choose');
 	
 
 	$radiusOptions.click(function(){
@@ -45,7 +46,10 @@ $(function(){
 		CURRENT_ITEM.vote = 0 // 0 for down
 		loadNext();
 	})
-	
+
+	$choose.click(function(){
+		//loadItem(CURRENT_ITEM);
+	})
 })
 
 function getGoogleCount(query, callback){
