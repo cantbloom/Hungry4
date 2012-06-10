@@ -150,8 +150,10 @@ $(function(){
 				// Fade in the modal "blanket" using the defined show speed
 				$('#overlay').fadeIn(this.options.show.effect.length);
 				var src = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng);
-				console.log(src);
 				$('#map_img').attr('src', src);
+				var href = 'http://www.yelp.com/search?find_desc='+ CURRENT_ITEM.place
+						+ '&find_loc=' + CURRENT_ITEM.address;
+				$('#yelpButton').attr('href', href);
 			},
 			beforeHide: function(){
 				// Fade out the modal "blanket" using the defined hide speed
@@ -185,7 +187,7 @@ function getGoogleCount(query, callback){
 	return;
 
 	if (getLocal(query)) {
-		console.log('local')
+		//console.log('local')
 		callback(null, getLocal(query));
 		return;
 	}
@@ -347,7 +349,7 @@ function updateUserVector(newVector){
 	USER_VECTOR = USER_VECTOR.map(function(value, index){
 		return value + 1/NUM_POS_VOTES*newVector[index] //mean of all past pos votes
 	})
-	console.log(USER_VECTOR);
+	//console.log(USER_VECTOR);
 }
 
 function nextImage(vector){
@@ -393,7 +395,8 @@ function getLocal(key){
 function makeWantTip(){
 	html = ""
 	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
-	html +=makeTumblrButton();
+	html += makeTumblrButton();
+	html += makeYelpButton();
 	return html
 }
 
@@ -405,11 +408,22 @@ function getMap(lat, lng) {
 	return url;
   }
 
-  function getYelp(biz_name, city) {
-	var url = 'http://www.yelp.com/search?find_desc='+biz_name
-	+'&find_loc=' + city; 
-	return url;
+  function getYelp(lat, lgn, callback) {
+  	var payload = {};
+  	payload.lat = lat;
+	payload.lng = lgn;
+
+	$.get('/addrFrmlatLng', payload, function(res){
+			callback(res);
+	})
+	
   }
+
+function makeYelpButton() {
+	return '<a id="yelpButton" target="_blank" href="">' +
+			'<img id = "yelpLogo" src = "/static/images/yelpLogo.png" >' +
+			'</a>'
+	}
 
 function makeTumblrButton(){
 	var tumblr_photo_source = CURRENT_ITEM.photo,
@@ -419,6 +433,6 @@ function makeTumblrButton(){
 	title = "Share on Tumblr",
 	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;";
 
-	console.log(tumblr_photo_source);
+	//console.log(tumblr_photo_source);
 	return '<a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a>'
 }
