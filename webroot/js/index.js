@@ -77,19 +77,19 @@ $(function(){
 
 	//tips!
 	$useCurrentButton.qtip({
-		content: 'Use your current location',
+		content: 'Use your current location.',
 		position: {corner: {target: 'bottomMiddle',tooltip: 'topMiddle'}},
 		style: {name: 'dark', tip: 'topMiddle'} //cream, dark, green, light, red, blue
  	});
 
  	$upVote.qtip({
-		content: 'Yum, show me more food like this',
+		content: 'Yum! Show me more food like this.',
 		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
 		style: {name: 'green',tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
  	});
 
  	$downVote.qtip({
-		content: 'Let\'s try something else, please',
+		content: 'Let\'s try something else, please.',
 		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
 		style: {name: 'red',tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
  	});
@@ -148,7 +148,10 @@ $(function(){
 				var tumblr_photo_source = CURRENT_ITEM.photo,
 				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
 				tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
-				href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru);
+				href = "http://www.tumblr.com/share/photo?source=" 
+				+ encodeURIComponent(tumblr_photo_source) + "&caption=" 
+				+ encodeURIComponent(tumblr_photo_caption) + "&click_thru=" 
+				+ encodeURIComponent(tumblr_photo_click_thru);
 				$('#tumblrButton').attr('href', href);
 
 				//twitter
