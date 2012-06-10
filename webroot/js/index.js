@@ -12,6 +12,7 @@ $(function(){
 	$radiusOptions = $('.radius-option');
 	$useCurrentButton = $('#useCurrentLocation');
 	$currentPhoto = $('#current-photo');
+	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
 	
@@ -169,7 +170,9 @@ function loadNext(){
 
 function swapPhoto(item){
 	CURRENT_ITEM = item;
-	$currentPhoto.css('backgroundImage', 'url('+item.photo+')')
+	$currentPhoto.attr('src', item.photo);
+	$photoCaption.html('The "'+item.dish+'"');
+	//$currentPhoto.css('backgroundImage', 'url('+item.photo+')')
 }
 
 function dotProduct (v1, v2){
