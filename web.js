@@ -7,7 +7,7 @@ querystring = require('querystring');
 url = require('url');
 
 var WEBROOT = path.join(path.dirname(__filename), '/webroot');
-
+SF_CACHE = null; // cache of foot spotting results in SF
 
 var app = express.createServer(express.logger());
 
@@ -31,10 +31,11 @@ app.get('/foodMe', function(request, response) {
 	var addr = query['addr'],
 	lat = query['lat'],
 	lng = query['lng'],
-	pages = query['pages'],
+	page_start = query['page_start'],
+	page_end = query['page_end'],
 	radius = query['radius'];
 	//console.log(addr, lat, lng, pages, radius);
-	foodMe(addr, lat, lng, pages, radius, function(results) {
+	foodMe(addr, lat, lng, page_start, page_end, radius, function(results) {
 		response.writeHead(200, {
 			'Content-Type': 'application/json'
 		});
@@ -65,6 +66,10 @@ app.listen(port, function() {
 });
 
 function latLngFrmAddr(addr, callback) {
+	callback([37.7749295,-122.4194155]);
+	return
+
+	//^^^ REMOVE LATER
 	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?address="; 
 	var URL = APIurl + encodeURIComponent(addr) + "&sensor=true";
 	//console.log(URL);
@@ -76,7 +81,7 @@ function latLngFrmAddr(addr, callback) {
 				latLng = [ loc["lat"], loc["lng"] ];
 			}
 			else {
-				latLng = [];
+				latLng = [37.7749295,-122.4194155];
 			}
 			callback(latLng);
 			return
@@ -89,6 +94,10 @@ function latLngFrmAddr(addr, callback) {
 // lat/long to addr
 
 function addrFrmlatLng(lat, lng, callback) {
+	callback("San Francisco");
+	return
+
+	//^^^ REMOVE LATER
 	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="; 
 	var URL = APIurl + encodeURIComponent(lat + "," + lng) + "&sensor=true";
 	//console.log(URL);
@@ -102,7 +111,7 @@ function addrFrmlatLng(lat, lng, callback) {
 				addr = addr.split(",")[0] + "," +  addr.split(",")[1]; // format street & city
 			}
 			else {
-				addr = "";
+				addr = "San Francisco";
 			}
 
 			callback(addr);
@@ -123,12 +132,17 @@ function boundingBox(lat, lng, rad) {
 	return box
 }
 
-function foodMe(addr, lat, lng, pages, radius, callback) {
-	var addr = addr || 'San Francisco',
-	pages = pages || 1,
+function foodMe(addr, lat, lng, page_start, page_end, radius, callback) {
+	var addr = addr || 'San Francisco';
+	if(addr == 'San Francisco' && SF_CACHE != null) {
+		callback(SF_CACHE);
+		return
+	}
+
+	var page_start = page_start || 1,
+	page_end = page_end || 2,
 	lat = lat || null,
 	lng = lng || null;
-
 	if (lat == null && lng == null) {
 		latLngFrmAddr(addr, function(latLng) {
 			loc = latLng 
@@ -143,11 +157,11 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 			sw = sw || null;
 			ne = ne || null;
 			var payload_arr = [];
-			for(var i = 0; i < pages; i ++ ) {
+			for(var i = 0; i < page_end; i ++ ) {
 				payload_arr[i] = {
 					'authenticity_token' : '',
 					'ajax' : 1,
-					'page': i + 1,
+					'page': i + page_start,
 					'addr' : addr,
 					'sw' : sw,
 					'ne' : ne,
@@ -193,7 +207,9 @@ function getFoodSpot(payload, callback) {
   	});
 }
 
-
+foodMe("San Francisco", null, null, 1, 5, 1, function(results){
+	SF_CACHE = results;
+});
 // latLngFrmAddr("641 ofarrel st san francisoc, ca", function(latLng) {
 // 	console.log("latlng " + latLng);
 // });

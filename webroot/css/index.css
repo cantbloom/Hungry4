@@ -94,13 +94,14 @@
 .icon-text{
 	vertical-align: middle;
 }
-#loc_icon {
-	margin:auto;
-}
 
 #loc_icon, #food_icon {
 	width:25px;
 	height:25px;
+}
+
+#loc_icon {
+	margin:auto;
 }
 
 button:active{
@@ -222,8 +223,9 @@ button:active{
 }
 
 #like_icon, #dislike_icon {
-	width:45;
-	height:45;
+	width:64px;
+	height:64px;
+	margin:auto;
 }
 
 #vote-up{
