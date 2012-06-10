@@ -90,13 +90,12 @@ body{
 }
 
 #loc_icon {
-	width:25;
-	height:25;
+	margin:auto;
 }
 
-#food_icon {
-	width:32;
-	height:32;
+#loc_icon, #food_icon {
+	width:25;
+	height:25;
 }
 
 button:active{
@@ -200,7 +199,7 @@ border-radius: 0.1;
 	top: 0px;
 	width: 590px;
 	height:25px;
-	text-align: right;
+	text-align: center;
 	color:#fff;
 	font-size:25px;
 	-webkit-transition: opacity .5s ease;
@@ -213,12 +212,18 @@ border-radius: 0.1;
 .vote{
 	padding:5px;
 	float: left;
-	font-size:26px;
+	font-size:20px;
 	cursor: pointer;
 	color:#fff;
 	height:90px;
 	width:100px;
 }
+
+#like_icon, #dislike_icon {
+	width:45;
+	height:45;
+}
+
 #vote-up{
 	background: #006e2e; /* Old browsers */
 }

@@ -15,6 +15,7 @@ $(function(){
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
+	$choose = $('#choose');
 	
 
 	$radiusOptions.click(function(){
@@ -46,12 +47,12 @@ $(function(){
 		loadNext();
 	})
 
+	$choose.click(function(){
+		//loadItem(CURRENT_ITEM);
+	})
+
 
 	//prompt user for location
-	//
-
-
-
 
 })
 
