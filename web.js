@@ -90,7 +90,8 @@ function addrFrmlatLng(lat, lng, callback) {
 	request({url: URL }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var json = JSON.parse(response.body),
-			addr = json["results"][0]["formatted_address"]; 
+			addr = json["results"][0]["formatted_address"];
+			addr = addr.split(",")[0] + "," +  addr.split(",")[1]; // format street & city
 			callback(addr);
 			return
 		}
@@ -170,6 +171,7 @@ function getFoodSpot(payload, callback) {
   		}
   	});
 }
+
 
 // latLngFrmAddr("641 ofarrel st san francisoc, ca", function(latLng) {
 // 	console.log("latlng " + latLng);
