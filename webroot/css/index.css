@@ -150,31 +150,28 @@ button:active{
 }
 
 #current-photo{
-	width:590;
-	height:590;
-	background: url();
-	background-position: initial initial;
-	background-repeat: initial initial;
+	width:590px;
+	height:590px;
 }	
 
-#current-photo::before {
-content: "";
-position: absolute;
-z-index: -1;
-top: 10px;
-bottom: 10px;
-left: 0;
-right: 0;
--webkit-box-shadow: 0 0 15px 
-rgba(0, 0, 0, 0.6);
--moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-box-shadow: 0 0 15px 
-rgba(0, 0, 0, 0.6);
--webkit-border-radius: 0.1;
--moz-border-radius: 0.1;
--ms-border-radius: 0.1;
--o-border-radius: 0.1;
-border-radius: 0.1;
+#photo-container::before {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 10px;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	-webkit-box-shadow: 0 0 15px 
+	rgba(0, 0, 0, 0.6);
+	-moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+	box-shadow: 0 0 15px 
+	rgba(0, 0, 0, 0.6);
+	-webkit-border-radius: 0.1;
+	-moz-border-radius: 0.1;
+	-ms-border-radius: 0.1;
+	-o-border-radius: 0.1;
+	border-radius: 0.1;
 }
 
 #photo-container:hover>#vote-container, #photo-container:hover>#photo-caption{
