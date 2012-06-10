@@ -2,6 +2,7 @@ $(function(){
 	//GLOBALS
 	RADIUS = .2;
 	FOOD = [];
+	USER_VECTOR = [.5,.5,.5,.5,.5,.5,.5];
 	$photoContainer = $('#photo-container').fadeOut(0);
 	$locContainer = $('#location-container');
 	$locInput = $('#location');
