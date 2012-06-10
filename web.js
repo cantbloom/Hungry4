@@ -39,7 +39,7 @@ app.get('/foodMe', function(request, response) {
 			'Content-Type': 'application/json'
 		});
 		//console.log(JSON.stringify(results));
-		response.write(JSON.stringify(results[0]));
+		response.write(JSON.stringify(results));
 		response.end();
 	});
 });
@@ -120,8 +120,8 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 			async.map(payload_arr, getFoodSpot, function(error, results) {
 				sightings = []
 				for (var item in results) {
-					
-					sightings.push(results[item]);
+					sightings = sightings.concat(results[item]);
+
 				}
 				callback(sightings);
 			});
