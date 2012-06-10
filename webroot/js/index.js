@@ -107,7 +107,12 @@ function getLocation(callback){
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition( 
 			function (position) {  
-				callback([position.coords.latitude, position.coords.longitude]);
+				var payload = {};
+				payload.lat = position.coords.latitude;
+				payload.lng = position.coords.longitude;
+				$.get('/addrFrmlatLng', payload, function(res){
+						callback(res);
+				})
 			}, 
 			// next function is the error callback
 			function (error){
@@ -162,6 +167,18 @@ function cos (v1, v2) {
 	return value;
 }
 
-function nextImage(){
+function nextImage(vector){
+	var max = null,
+	max_item = null;
+	for (item in FOOD) {
+		var val = cos(item, vector);
+		if val > max {
+			if !item.viewed {
+				max_item = item;
+				max = val;
+			}
+		}
+	}
+	return max_item; 
 
 }
