@@ -291,6 +291,10 @@ function nextImage(vector){
 }
 
 function getMap(lat, lng, biz_name) {
+	var loc = lat + "," + lng;
+	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" \
+	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" \
+	+ loc + "&sensor=true";
     var myOptions = {
       center: new google.maps.LatLng(lat, lng),
       zoom: 8,
