@@ -37,6 +37,7 @@ $(function(){
 	})
 
 	$searchButton.click(function(){
+		$locContainer.fadeOut();
 		locationResponse($locInput.val(), function(results){
 			foodResponse(results);
 			loadNext();
@@ -119,7 +120,7 @@ $(function(){
 		{
 			content: {
 				title: {
-					text: 'More info',
+					text: '<span id="modal-title">'+CURRENT_ITEM.title+'</span>',
 					button: 'Close'
 				},
 				text: makeWantTip()
@@ -147,7 +148,7 @@ $(function(){
 				beforeShow: function(){
 				// Fade in the modal "blanket" using the defined show speed
 				$('#overlay').fadeIn(this.options.show.effect.length);
-				
+				$('#modal-title').html(CURRENT_ITEM.title);
 				//tumblr button
 				var tumblr_photo_source = CURRENT_ITEM.photo,
 				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
