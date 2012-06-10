@@ -1,8 +1,9 @@
 	body{
-	background: url(../images/furley_bg.png);
+	background: url(../images/bg_default.png);
 	background-position: initial initial;
 	background-repeat: initial initial;
 }
+
 
 /* For modern browsers */
 .cf:before,
@@ -80,7 +81,6 @@
 	font-size: 15px;
 	width: 150px;
 	height: 40px;
-	color:#000000;
 	vertical-align: middle;
 	border:none;
 	cursor: pointer;
@@ -93,6 +93,8 @@
 }
 
 .icon-text{
+	color:#FFFFFF;
+	font-family: 'Questrial', sans-serif;
 	vertical-align: middle;
 }
 
@@ -275,7 +277,7 @@ button:active,#vote-container>div:active{
 }
 
 @media screen and (max-width: 1024px) { /* Specific to this particular image */
-	img.bg {
+	#bg {
 		left: 50%;
 		margin-left: -512px;   /* 50% */
 	}

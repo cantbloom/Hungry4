@@ -56,6 +56,8 @@ $(function(){
 	$choose.click(function(){
 		//loadItem(CURRENT_ITEM);
 	})
+	var src = "../static/images/bg" + Math.floor((Math.random()*10)+1) + ".jpg";
+	$bg.attr('src', src);
 })
 
 function getGoogleCount(query, callback){
