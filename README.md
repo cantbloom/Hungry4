@@ -1,4 +1,4 @@
-Hungry4 - It's hard to figure out what you're hungry for
+It's hard to figure out what you're hungry for
 =======
 
 Hungry4 guides you to great local food through photos of actual dishes.
