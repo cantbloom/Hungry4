@@ -45,22 +45,12 @@ $(function(){
 		CURRENT_ITEM.vote = 0 // 0 for down
 		loadNext();
 	})
-
-
-	//prompt user for location
-	//
-
-
-
-
+	
 })
 
 function getGoogleCount(query, callback){
-	//todo: caching
-	var inCache = true;
-	if (inCache) {
-		//getFromCache(query);
-		callback(null, Math.random());
+	if (getLocal(query)) {
+		callback(null, getLocal(query));
 		return;
 	}
 
@@ -75,6 +65,7 @@ function getGoogleCount(query, callback){
 		    	count = res.responseData.cursor.estimatedResultCount;
 			    //console.log(query)
 			    //console.log(count)
+			    setLocal(query, count)
 			    callback(null, count);	
 		    } catch (e){
 		    	callback(e, null);	
@@ -221,4 +212,28 @@ function nextImage(vector){
 	}
 
 	return max_item; 
+}
+
+function setLocal (key, value){
+	if(typeof(Storage)!=="undefined") {
+		localStorage[key] = value;
+		
+		return true
+
+	} else {
+	  	return null
+	}
+}
+
+function getLocal(key){
+	if( typeof(Storage)!=="undefined" ) {
+		if (localStorage[key]){
+			return localStorage[key]
+		}
+
+		return null
+
+	} else {
+	  	return null
+	}
 }
