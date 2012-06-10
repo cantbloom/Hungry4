@@ -77,9 +77,18 @@ $(function(){
  	});
 
  	$want.qtip({
-		content: 'Get directions to this exact dish',
+		content: makeWantTip(),
 		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
-		style: {name: 'dark', tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
+		style: {name: 'dark', tip: 'bottomMiddle'}, //cream, dark, green, light, red, blue
+		solo: true,
+		show: 'click',
+   		hide: 'click',
+   		api: {
+			beforeShow: function(){
+				console.log('a')
+				this.updateContent(makeTumblrButton())
+			}	 
+	    }
  	});
 
  	$('#walk').qtip({
@@ -312,4 +321,22 @@ function getLocal(key){
 	} else {
 	  	return null
 	}
+}
+
+function makeWantTip(){
+	console.log(makeTumblrButton())
+	return makeTumblrButton();
+ 
+}
+
+function makeTumblrButton(){
+	var tumblr_photo_source = CURRENT_ITEM.photo,
+	tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
+	tumblr_photo_click_thru = 'http://compeat.herokuapp.com',
+	href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru),
+	title = "Share on Tumblr",
+	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;";
+
+	console.log(tumblr_photo_source);
+	return '<a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a>'
 }
