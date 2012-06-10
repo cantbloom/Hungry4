@@ -27,19 +27,34 @@ app.get('/', function(request, response) {
 
 app.get('/foodMe', function(request, response) {
 	var query = url.parse(request.url, true).query;
-	console.log(query);
+	//console.log(query);
 	var addr = query['addr'],
 	lat = query['lat'],
 	lng = query['lng'],
 	pages = query['pages'],
 	radius = query['radius'];
-	console.log(addr, lat, lng, pages, radius);
+	//console.log(addr, lat, lng, pages, radius);
 	foodMe(addr, lat, lng, pages, radius, function(results) {
 		response.writeHead(200, {
 			'Content-Type': 'application/json'
 		});
 		//console.log(JSON.stringify(results));
 		response.write(JSON.stringify(results));
+		response.end();
+	});
+});
+
+app.get('/addrFrmlatLng', function(request, response) {
+	var query = url.parse(request.url, true).query;
+	console.log(query);
+	lat = query['lat'],
+	lng = query['lng'],
+	addrFrmlatLng(lat, lng,  function(results) {
+		response.writeHead(200, {
+			'Content-Type': 'text/html'
+		});
+		//console.log(results);
+		response.write(results);
 		response.end();
 	});
 });
@@ -112,7 +127,7 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 				payload_arr[i] = {
 					'authenticity_token' : '',
 					'ajax' : 1,
-					'page': i +1,
+					'page': i + 1,
 					'sw' : String(box['sw']),
 					'ne' : String(box['ne']),
 				}; 
@@ -121,6 +136,7 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 				sightings = []
 				for (var item in results) {
 					sightings = sightings.concat(results[item]);
+
 				}
 				callback(sightings);
 			});
