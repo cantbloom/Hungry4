@@ -351,24 +351,10 @@ function nextImage(vector){
 
 function getMap(lat, lng, biz_name) {
 	var loc = lat + "," + lng;
-	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" \
-	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" \
+	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" 
+	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" 
 	+ loc + "&sensor=true";
-    var myOptions = {
-      center: new google.maps.LatLng(lat, lng),
-      zoom: 8,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-
-    var marker = new google.maps.Marker({
-	    position: map.getCenter(),
-	    map: map,
-	    title: biz_name
-	  });
-
-    console.log('a')
+	return url;
   }
 
 function setLocal (key, value){
