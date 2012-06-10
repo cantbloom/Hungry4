@@ -29,7 +29,7 @@ $(function(){
 	})
 
 
-	//prompt user for locaion
+	//prompt user for location
 	//
 
 
@@ -172,8 +172,8 @@ function nextImage(vector){
 	max_item = null;
 	for (item in FOOD) {
 		var val = cos(item, vector);
-		if val > max {
-			if !item.viewed {
+		if (val > max) {
+			if (!item.viewed) {
 				max_item = item;
 				max = val;
 			}
