@@ -19,7 +19,6 @@ $(function(){
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
-	$tumblrButton = $('#tumblrButton');
 	$map = $('#map');
 	$want = $('#want');
 	$bg = $('#bg');
@@ -104,13 +103,7 @@ $(function(){
    		hide: 'click',
    		api: {
 			beforeShow: function(){
-				//tumblr button
-				var tumblr_photo_source = CURRENT_ITEM.photo,
-				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
-				tumblr_photo_click_thru = 'http://compeat.herokuapp.com',
-				href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru);
-
-				$('#tumblrButton').attr('href', href);
+				
 
 				//map
 				var mapSrc = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng, CURRENT_ITEM.title);
@@ -150,8 +143,21 @@ $(function(){
 				beforeShow: function(){
 				// Fade in the modal "blanket" using the defined show speed
 				$('#overlay').fadeIn(this.options.show.effect.length);
+				
+				//tumblr button
+				var tumblr_photo_source = CURRENT_ITEM.photo,
+				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
+				tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
+				href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru);
+				$('#tumblrButton').attr('href', href);
+
+				//twitter
+				var twitter_text = CURRENT_ITEM.title +' from Hungry4';
+				$('#twitterButton').attr('data-url', CURRENT_ITEM.photo).attr('data-text', twitter_text);
+
+				
+				//gogole maps
 				var src = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng);
-				console.log(src);
 				$('#map_img').attr('src', src);
 			},
 			beforeHide: function(){
@@ -394,13 +400,14 @@ function makeWantTip(){
 	html = ""
 	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
 	html +=makeTumblrButton();
+	//html +=makeTwitterButton();
 	return html
 }
 
 function getMap(lat, lng) {
 	var loc = lat + "," + lng;
 	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" 
-	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" 
+	+ loc + "&zoom=14&size=400x400&markers=color:red%7Clabel:S%7C" 
 	+ loc + "&sensor=true";
 	return url;
   }
@@ -414,11 +421,16 @@ function getMap(lat, lng) {
 function makeTumblrButton(){
 	var tumblr_photo_source = CURRENT_ITEM.photo,
 	tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
-	tumblr_photo_click_thru = 'http://compeat.herokuapp.com',
+	tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
 	href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru),
 	title = "Share on Tumblr",
 	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;";
 
 	console.log(tumblr_photo_source);
 	return '<a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a>'
+}
+
+function makeTwitterButton(){
+	var text = CURRENT_ITEM.title +' from Hungry4';
+	return '<a id="twitterButton" href="https://twitter.com/share" class="twitter-share-button" data-url="'+CURRENT_ITEM.photo+'" data-text="'+text+'" data-via="Hungry4App">Tweet</a>'
 }
