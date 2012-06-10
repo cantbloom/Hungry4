@@ -229,11 +229,11 @@ button:active{
 }
 
 #vote-up{
-	background: #006e2e; /* Old browsers */
+	background: #3CB371; /* Old browsers */
 }
 
 #vote-down{
-	background: #3f4c6b; /* Old browsers */
+	background: #CD5C5C; /* Old browsers */
 }
  .vote.selected,.vote:active {
 	background: #3f4c6b; /* Old browsers */
