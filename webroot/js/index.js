@@ -18,6 +18,7 @@ $(function(){
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
 	$choose = $('#choose');
+	$bg = $('#bg');
 	
 
 	$radiusOptions.click(function(){
@@ -162,6 +163,7 @@ function locationResponse(loc, callback){
 
 function transitionToImages(){
 	$locContainer.fadeOut();
+	$bg.fadeOut();
 	$photoContainer.fadeIn();
 }
 
@@ -191,7 +193,7 @@ function swapPhoto(item){
 	CURRENT_ITEM = item;
 	$currentPhoto.attr('src', item.photo);
 	$photoCaption.html('The "'+item.dish+'"');
-	//$currentPhoto.css('backgroundImage', 'url('+item.photo+')')
+	$currentPhoto.css('backgroundImage', 'url('+item.photo+')')
 }
 
 function dotProduct (v1, v2){
