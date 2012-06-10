@@ -17,6 +17,8 @@ $(function(){
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
+	$tumblrButton = $('#tumblrButton');
+	$map = $('map');
 	$want = $('#want');
 	$bg = $('#bg');
 	
@@ -78,20 +80,68 @@ $(function(){
 		style: {name: 'red',tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
  	});
 
- 	$want.qtip({
+/* 	$want.qtip({
 		content: makeWantTip(),
 		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
-		style: {name: 'dark', tip: 'bottomMiddle'}, //cream, dark, green, light, red, blue
+		style: {name: 'dark', tip: 'bottomMiddle',width: { max: 500}}, //cream, dark, green, light, red, blue
 		solo: true,
 		show: 'click',
    		hide: 'click',
    		api: {
 			beforeShow: function(){
-				console.log('a')
-				this.updateContent(makeTumblrButton())
+				//tumblr button
+				var tumblr_photo_source = CURRENT_ITEM.photo,
+				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
+				tumblr_photo_click_thru = 'http://compeat.herokuapp.com',
+				href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru);
+
+				$('#tumblrButton').attr('href', href);
+
+				//map
+				var mapSrc = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng, CURRENT_ITEM.title);
+
 			}	 
 	    }
- 	});
+ 	});*/
+	$want.qtip(
+		{
+			content: {
+				title: {
+					text: 'More info',
+					button: 'Close'
+				},
+				text: makeWantTip()
+			},
+			position: {
+				target: $(document.body), // Position it via the document body...
+				corner: 'center' // ...at the center of the viewport
+			},
+			show: {
+				when: 'click', // Show it on click
+				solo: true // And hide all other tooltips
+			},
+			hide: false,
+			style: {
+				width: { max: 350 },
+				padding: '14px',
+				border: {
+					width: 9,
+					radius: 9,
+					color: '#666666'
+				},
+				name: 'light'
+			},
+			api: {
+				beforeShow: function(){
+				// Fade in the modal "blanket" using the defined show speed
+				$('#overlay').fadeIn(this.options.show.effect.length);
+			},
+			beforeHide: function(){
+				// Fade out the modal "blanket" using the defined hide speed
+				$('#overlay').fadeOut(this.options.hide.effect.length);
+			}
+		}
+	});
 
  	$('#walk').qtip({
 		content: 'Search ~5 blocks around you',
@@ -309,10 +359,12 @@ function getMap(lat, lng, biz_name) {
         myOptions);
 
     var marker = new google.maps.Marker({
-	    position: LatLng(lat, lng, false),
+	    position: map.getCenter(),
 	    map: map,
 	    title: biz_name
 	  });
+
+    console.log('a')
   }
 
 function setLocal (key, value){
@@ -340,9 +392,12 @@ function getLocal(key){
 }
 
 function makeWantTip(){
-	console.log(makeTumblrButton())
-	return makeTumblrButton();
+	html = ""
+	html +='<div id="map" style="width:400px; height:400px"></div>'
+	html +=makeTumblrButton();
+	return html
  
+
 }
 
 function makeTumblrButton(){
