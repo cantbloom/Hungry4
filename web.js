@@ -144,14 +144,10 @@ function boundingBox(lat, lng, rad) {
 
 function foodMe(addr, lat, lng, page_start, page_end, radius, callback) {
 	var addr = addr || 'San Francisco';
-	if(SF_CACHE != null) {
+	if(addr == 'San Francisco' && SF_CACHE != null) {
 		callback(SF_CACHE);
 		return
 	}
-	// if(addr == 'San Francisco' && SF_CACHE != null) {
-	// 	callback(SF_CACHE);
-	// 	return
-	// }
 
 	var page_start = page_start || 1,
 	page_end = page_end || 2,
