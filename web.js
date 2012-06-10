@@ -6,6 +6,8 @@ path = require('path');
 querystring = require('querystring');
 url = require('url');
 
+
+
 var WEBROOT = path.join(path.dirname(__filename), '/webroot');
 SF_CACHE = null; // cache of foot spotting results in SF
 
@@ -47,7 +49,22 @@ app.get('/foodMe', function(request, response) {
 
 app.get('/addrFrmlatLng', function(request, response) {
 	var query = url.parse(request.url, true).query;
-	console.log(query);
+	//console.log(query);
+	lat = query['lat'],
+	lng = query['lng'],
+	addrFrmlatLng(lat, lng,  function(results) {
+		response.writeHead(200, {
+			'Content-Type': 'text/html'
+		});
+		//console.log(results);
+		response.write(results);
+		response.end();
+	});
+});
+
+app.get('/want', function(request, response) {
+	var query = url.parse(request.url, true).query;
+	//console.log(query);
 	lat = query['lat'],
 	lng = query['lng'],
 	addrFrmlatLng(lat, lng,  function(results) {
@@ -201,11 +218,13 @@ function getFoodSpot(payload, callback) {
   			}
   			else {
   				console.log("no sightings :(");
-  			}
   			callback(null, json);
-  		}
-  	});
+  			}
+  		});
+	}
+
 }
+
 
 foodMe("San Francisco", null, null, 1, 5, 1, function(results){
 	SF_CACHE = results;

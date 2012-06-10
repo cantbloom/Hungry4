@@ -290,6 +290,16 @@ function nextImage(vector){
 	return max_item; 
 }
 
+function getMap(lat, lng) {
+    var myOptions = {
+      center: new google.maps.LatLng(lat, lng),
+      zoom: 8,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+  }
+
 function setLocal (key, value){
 	if(typeof(Storage)!=="undefined") {
 		localStorage[key] = value;
