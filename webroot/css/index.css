@@ -1,4 +1,4 @@
-body{
+	body{
 	background: url(../images/diamond_upholstery.png);
 	background-position: initial initial;
 	background-repeat: initial initial;
@@ -55,7 +55,7 @@ body{
 
 #location{
 	height: 40px;
-	width: 425px;
+	width: 535px;
 	border: none;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -68,8 +68,9 @@ body{
 	vertical-align: middle
 }
 #useCurrentLocation{
-	width: 35px;
-	height: 35px;
+	width: 40px;
+	height: 40px;
+	padding: 0px;
 	vertical-align: middle
 }
 
@@ -85,17 +86,21 @@ body{
 }
 
 .icon {
-	width:64;
-	height:64;
+	width:20px;
+	height:20px;
+	vertical-align: middle;
 }
 
+.icon-text{
+	vertical-align: middle;
+}
 #loc_icon {
 	margin:auto;
 }
 
 #loc_icon, #food_icon {
-	width:25;
-	height:25;
+	width:25px;
+	height:25px;
 }
 
 button:active{

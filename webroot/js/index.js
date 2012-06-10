@@ -53,7 +53,11 @@ $(function(){
 })
 
 function getGoogleCount(query, callback){
+	callback(null, Math.random());
+	return;
+
 	if (getLocal(query)) {
+		console.log('local')
 		callback(null, getLocal(query));
 		return;
 	}
@@ -106,6 +110,7 @@ function getFood(payload, callback){
 	$.get('/foodMe', payload, function(res){
 		console.log(res.length);
 		async.map(res, getRatio, function(err,results){
+			console.log('count done')
 			callback(results);
 		})
 	})
