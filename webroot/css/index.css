@@ -309,6 +309,8 @@ button:active,#vote-container>div:active{
 }
 
 #yelpLogo {
-	width:100px;
-	height:100px;
+	a:link {text-decoration:none;}
+	a:visited {text-decoration:none;}
+	a:hover {text-decoration:none;}
+	a:active {text-decoration:none;}
 }

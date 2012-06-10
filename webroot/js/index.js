@@ -404,7 +404,6 @@ function makeWantTip(){
 	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
 	html += makeTumblrButton();
 	html += makeYelpButton();
-	html +=makeTumblrButton();
 	//html +=makeTwitterButton();
 	return html
 }
@@ -415,17 +414,6 @@ function getMap(lat, lng) {
 	+ loc + "&zoom=14&size=400x400&markers=color:red%7Clabel:S%7C" 
 	+ loc + "&sensor=true";
 	return url;
-  }
-
-  function getYelp(lat, lgn, callback) {
-  	var payload = {};
-  	payload.lat = lat;
-	payload.lng = lgn;
-
-	$.get('/addrFrmlatLng', payload, function(res){
-			callback(res);
-	})
-	
   }
 
 function makeYelpButton() {
@@ -443,7 +431,7 @@ function makeTumblrButton(){
 	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;";
 
 	//console.log(tumblr_photo_source);
-	return '<a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a>'
+	return '<a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a>   '
 }
 
 function makeTwitterButton(){
