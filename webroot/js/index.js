@@ -46,7 +46,7 @@ $(function(){
 	})
 
 
-	//prompt user for locaion
+	//prompt user for location
 	//
 
 
@@ -216,6 +216,5 @@ function nextImage(vector){
 			}
 		}
 	}
-	console.log(max_item)
-	return max_item; 
+	return FOOD[max_item]; 
 }
