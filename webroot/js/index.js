@@ -3,12 +3,17 @@ $(function(){
 	RADIUS = .2;
 	FOOD = [];
 	USER_VECTOR = [.5,.5,.5,.5,.5,.5,.5];
+	NUM_POS_VOTES = 0;
+	CURRENT_ITEM = {};
 	$photoContainer = $('#photo-container').fadeOut(0);
 	$locContainer = $('#location-container');
 	$locInput = $('#location');
 	$searchButton = $('#search');
 	$radiusOptions = $('.radius-option');
 	$useCurrentButton = $('#useCurrentLocation');
+	$currentPhoto = $('#current-photo');
+	$upVote = $('#vote-up');
+	$downVote = $('#vote-down');
 	
 
 	$radiusOptions.click(function(){
@@ -26,6 +31,17 @@ $(function(){
 
 	$searchButton.click(function(){
 		locationResponse($locInput.val());
+	})
+
+	$upVote.click(function(){
+		CURRENT_ITEM.vote = 1 // 1 for up
+		NUM_POS_VOTES += 1;
+		updateUserVector(CURRENT_ITEM.ratio)
+	})
+
+	$downVote.click(function(){
+		CURRENT_ITEM.vote = 0 // 0 for down
+		updateUserVector()
 	})
 
 
@@ -87,7 +103,7 @@ function getRatio(item, callback){
 }
 
 function getFood(payload, callback){
-	var pages = 2; //number of pages to be returned
+	var pages = 1; //number of pages to be returned
 	payload.pages = pages;
 	payload.radius = $('.radius-option.selected').attr('value');
 	$.get('/foodMe', payload, function(res){
@@ -100,7 +116,7 @@ function getFood(payload, callback){
 
 function foodResponse(results){
 	FOOD = results
-	console.log(FOOD)
+	loadNext()
 }
 
 function getLocation(callback){
@@ -134,8 +150,20 @@ function transitionToImages(){
 	$photoContainer.fadeIn();
 }
 
-function swapPhoto(){
+function loadNext(){
+	var item = nextImage(USER_VECTOR);
+	item.viewed = true;
+	swapPhoto(item.photo);
 
+	if ($photoContainer.css('display') == 'none'){
+		transitionToImages();
+	}
+		
+}
+
+function swapPhoto(item){
+	CURRENT_ITEM = item;
+	$currentPhoto.css('backgroundImage', 'url('+item.photo+')')
 }
 
 function dotProduct (v1, v2){
@@ -162,6 +190,12 @@ function cs (v1, v2) {
 	return value;
 }
 
-function nextImage(){
+function updateUserVector(newVecotr){
+	USER_VECTOR.map(function(value, index){
+		return value + 1/NUM_POS_VOTES*newVector[index] //mean of all past pos votes
+	})
+}
 
+function nextImage(){
+	
 }
