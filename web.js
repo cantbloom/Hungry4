@@ -4,6 +4,7 @@ request = require('request'),
 async = require('async'),
 path = require('path');
 querystring = require('querystring');
+url = require('url');
 
 var WEBROOT = path.join(path.dirname(__filename), '/webroot');
 
@@ -25,16 +26,19 @@ app.get('/', function(request, response) {
 });
 
 app.get('/foodMe', function(request, response) {
-
-	var addr = request.params.addr,
-	lat = request.params.lat,
-	lng = request.params.lng,
-	pages = request.params.pages,
-	radius = request.params.radius;
+	var query = url.parse(request.url, true).query;
+	console.log(query);
+	var addr = query['addr'],
+	lat = query['lat'],
+	lng = query['lng'],
+	pages = query['pages'],
+	radius = query['radius'];
+	console.log(addr, lat, lng, pages, radius);
 	foodMe(addr, lat, lng, pages, radius, function(results) {
 		response.writeHead(200, {
-			'Content-Type': 'Application/json'
+			'Content-Type': 'application/json'
 		});
+		//console.log(JSON.stringify(results));
 		response.write(JSON.stringify(results));
 		response.end();
 	});
@@ -87,6 +91,24 @@ function latLngFrmAddr(addr, callback) {
 			loc = json["results"][0]["geometry"]["location"]; 
 			latLng = [ loc["lat"], loc["lng"] ];
 			callback(latLng);
+			return
+		}
+		callback(error);
+		return
+	});
+}
+
+// lat/long to addr
+
+function addrFrmlatLng(lat, lng, callback) {
+	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="; 
+	var URL = APIurl + encodeURIComponent(lat + "," + lng) + "&sensor=true";
+	//console.log(URL);
+	request({url: URL }, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var json = JSON.parse(response.body),
+			addr = json["results"][0]["formatted_address"]; 
+			callback(addr);
 			return
 		}
 		callback(error);
@@ -165,9 +187,13 @@ function getFoodSpot(payload, callback) {
 // latLngFrmAddr("641 ofarrel st san francisoc, ca", function(latLng) {
 // 	console.log("latlng " + latLng);
 // });
+// addrFrmlatLng(37.7854214, -122.4155574, function(addr) {
+// 	console.log("addr " + addr);
+// });
+
 //console.log(boundingBox(37.7854214,-122.4155574, .1))
 // foodMe("641 ofarrell st san francisoc, ca", null, null, 2, 1, function(results){
-// 	console.log(results);
+// 	console.log(JSON.stringify(results));
 // });
 //console.log(foodMe("11374", 1, .1))
 //console.log(foodMe(40.72702032493787, -73.86104117506211, 1, .1))
