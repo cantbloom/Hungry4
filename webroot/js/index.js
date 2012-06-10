@@ -18,7 +18,7 @@ $(function(){
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
 	$tumblrButton = $('#tumblrButton');
-	$map = $('map');
+	$map = $('#map');
 	$want = $('#want');
 	$bg = $('#bg');
 	
@@ -122,7 +122,7 @@ $(function(){
 			},
 			hide: false,
 			style: {
-				width: { max: 350 },
+				width: { max: 500 },
 				padding: '14px',
 				border: {
 					width: 9,
@@ -135,6 +135,9 @@ $(function(){
 				beforeShow: function(){
 				// Fade in the modal "blanket" using the defined show speed
 				$('#overlay').fadeIn(this.options.show.effect.length);
+				var src = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng);
+				console.log(src);
+				$('#map_img').attr('src', src);
 			},
 			beforeHide: function(){
 				// Fade out the modal "blanket" using the defined hide speed
@@ -349,7 +352,7 @@ function nextImage(vector){
 	return max_item; 
 }
 
-function getMap(lat, lng, biz_name) {
+function getMap(lat, lng) {
 	var loc = lat + "," + lng;
 	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" 
 	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" 
@@ -383,7 +386,7 @@ function getLocal(key){
 
 function makeWantTip(){
 	html = ""
-	html +='<div id="map" style="width:400px; height:400px"></div>'
+	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
 	html +=makeTumblrButton();
 	return html
  
