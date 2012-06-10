@@ -49,6 +49,7 @@
 	height: 40px;
 	width: 535px;
 	border: none;
+	margin-top:5px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -63,6 +64,7 @@
 	width: 40px;
 	height: 40px;
 	padding: 0px;
+	margin-top:5px;
 	vertical-align: middle;
 	cursor: pointer;
 	-webkit-border-radius: 3px;
