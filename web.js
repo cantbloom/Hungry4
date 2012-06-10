@@ -65,6 +65,10 @@ app.listen(port, function() {
 });
 
 function latLngFrmAddr(addr, callback) {
+	callback([37.7749295,-122.4194155]);
+	return
+
+	//^^^ REMOVE LATER
 	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?address="; 
 	var URL = APIurl + encodeURIComponent(addr) + "&sensor=true";
 	//console.log(URL);
@@ -76,7 +80,7 @@ function latLngFrmAddr(addr, callback) {
 				latLng = [ loc["lat"], loc["lng"] ];
 			}
 			else {
-				latLng = [];
+				latLng = [37.7749295,-122.4194155];
 			}
 			callback(latLng);
 			return
@@ -89,6 +93,10 @@ function latLngFrmAddr(addr, callback) {
 // lat/long to addr
 
 function addrFrmlatLng(lat, lng, callback) {
+	callback("San Francisco");
+	return
+	
+	//^^^ REMOVE LATER
 	var APIurl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="; 
 	var URL = APIurl + encodeURIComponent(lat + "," + lng) + "&sensor=true";
 	//console.log(URL);
@@ -102,7 +110,7 @@ function addrFrmlatLng(lat, lng, callback) {
 				addr = addr.split(",")[0] + "," +  addr.split(",")[1]; // format street & city
 			}
 			else {
-				addr = "";
+				addr = "San Francisco";
 			}
 
 			callback(addr);
@@ -128,7 +136,6 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 	pages = pages || 1,
 	lat = lat || null,
 	lng = lng || null;
-
 	if (lat == null && lng == null) {
 		latLngFrmAddr(addr, function(latLng) {
 			loc = latLng 
