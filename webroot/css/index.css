@@ -225,7 +225,7 @@ button:active{
 #like_icon, #dislike_icon {
 	width:64px;
 	height:64px;
-	margin:auto;
+	margin:13px;
 }
 
 #vote-up{
@@ -243,4 +243,15 @@ button:active{
 	background: -o-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* IE10+ */
 	background: linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* W3C */
+}
+
+#want{
+	padding:25px 5px;
+	float: left;
+	font-size:35px;
+	cursor: pointer;
+	color:#fff;
+	height:40px;
+	width:360px;	
+	text-align: center;
 }
