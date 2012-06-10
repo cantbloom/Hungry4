@@ -56,6 +56,8 @@ $(function(){
 	$want.click(function(){
 		//loadItem(CURRENT_ITEM);
 	})
+	var src = "../static/images/bg" + Math.floor((Math.random()*10)+1) + ".jpg";
+	$bg.attr('src', src);
 
 	//tips!
 	$useCurrentButton.qtip({
@@ -108,8 +110,6 @@ $(function(){
 		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
 		style: {name: 'dark', tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
  	});
-
-
 
 })
 
@@ -298,6 +298,22 @@ function nextImage(vector){
 
 	return max_item; 
 }
+
+function getMap(lat, lng, biz_name) {
+    var myOptions = {
+      center: new google.maps.LatLng(lat, lng),
+      zoom: 8,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+
+    var marker = new google.maps.Marker({
+	    position: LatLng(lat, lng, false),
+	    map: map,
+	    title: biz_name
+	  });
+  }
 
 function setLocal (key, value){
 	if(typeof(Storage)!=="undefined") {
