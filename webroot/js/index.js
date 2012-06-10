@@ -18,6 +18,7 @@ $(function(){
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
 	$choose = $('#choose');
+	$bg = $('#bg');
 	
 
 	$radiusOptions.click(function(){
@@ -162,6 +163,7 @@ function locationResponse(loc, callback){
 
 function transitionToImages(){
 	$locContainer.fadeOut();
+	$bg.fadeOut();
 	$photoContainer.fadeIn();
 }
 
