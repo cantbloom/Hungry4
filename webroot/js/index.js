@@ -41,7 +41,7 @@ function getGoogleCount(query, callback){
 	var inCache = true;
 	if (inCache) {
 		//getFromCache(query);
-		callback(Math.random());
+		callback(null, Math.random());
 		return;
 	}
 
@@ -67,27 +67,26 @@ function getGoogleCount(query, callback){
 
 function getRatio(item, callback){
 	var query = item.dish,
-	flavors = ['spicy'/*, 'meaty', 'ethnic', 'savory', 'fish'*/].map(function(item){return query + ' ' + item});
+	flavors = ['spicy', 'meat', 'fish', 'ethnic', 'breakfast', 'lunch', 'dinner'].map(function(item){return query + ' ' + item});
 	flavors.unshift(query) 
-	console.log(callback)
+
 	async.map(flavors, getGoogleCount, function(err, results){
     	if (err != null){
     		return
     	}
-
     	var total = results.shift();
     	results = results.map(function(item){
     		return item/total;
     	})
-
+    	item.ratio = results;
     	if (callback){
-    		callback(null,results)
+    		callback(null,item)
     	}
 	});
 }
 
 function getFood(payload, callback){
-	var pages = 1; //number of pages to be returned
+	var pages = 2; //number of pages to be returned
 	payload.pages = pages;
 	payload.radius = $('.radius-option.selected').attr('value');
 	$.get('/foodMe', payload, function(res){
@@ -98,8 +97,9 @@ function getFood(payload, callback){
 	})
 }
 
-function foodResponse(a){
-	console.log(a)
+function foodResponse(results){
+	FOOD = results
+	console.log(FOOD)
 }
 
 function getLocation(callback){
