@@ -21,7 +21,7 @@ $(function(){
 	$downVote = $('#vote-down');
 	$map = $('#map');
 	$want = $('#want');
-	$bg = $('#bg');
+	$bg = $('#bg').fadeOut(0);
 	
 
 	$radiusOptions.click(function(){
@@ -59,6 +59,10 @@ $(function(){
 			$voteContainer.addClass('disabled')
 			loadNext();
 		}
+	})
+
+	$bg.load(function(){
+		$bg.fadeIn(500);
 	})
 
 	$preload.load(function(){
