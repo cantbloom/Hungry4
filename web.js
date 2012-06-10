@@ -70,9 +70,14 @@ function latLngFrmAddr(addr, callback) {
 	//console.log(URL);
 	request({url: URL }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			var json = JSON.parse(response.body),
-			loc = json["results"][0]["geometry"]["location"]; 
-			latLng = [ loc["lat"], loc["lng"] ];
+			var json = JSON.parse(response.body);
+			if(json['status'] != 'OVER_QUERY_LIMIT' ) {
+				loc = json["results"][0]["geometry"]["location"]; 
+				latLng = [ loc["lat"], loc["lng"] ];
+			}
+			else {
+				latLng = [];
+			}
 			callback(latLng);
 			return
 		}
@@ -90,13 +95,14 @@ function addrFrmlatLng(lat, lng, callback) {
 	request({url: URL }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var json = JSON.parse(response.body);
+			console.log(json);
 			var addr;
-			if(json != null) {
+			if(json['status'] != 'OVER_QUERY_LIMIT' ) {
 				addr = json["results"][0]["formatted_address"];
 				addr = addr.split(",")[0] + "," +  addr.split(",")[1]; // format street & city
 			}
 			else {
-				addr = "Error :( Please enter your address";
+				addr = "";
 			}
 
 			callback(addr);
@@ -118,7 +124,7 @@ function boundingBox(lat, lng, rad) {
 }
 
 function foodMe(addr, lat, lng, pages, radius, callback) {
-	var addr = addr || null,
+	var addr = addr || 'San Francisco',
 	pages = pages || 1,
 	lat = lat || null,
 	lng = lng || null;
@@ -126,20 +132,28 @@ function foodMe(addr, lat, lng, pages, radius, callback) {
 	if (lat == null && lng == null) {
 		latLngFrmAddr(addr, function(latLng) {
 			loc = latLng 
-			lat = loc[0];
-			lng = loc[1];
-			var box = boundingBox(lat, lng, radius),
-			result = ""
-			payload_arr = [];
+			if (latLng != []) {
+				lat = loc[0];
+				lng = loc[1];
+				var box = boundingBox(lat, lng, radius),
+				sw = String(box['sw']),
+				ne = String(box['ne']);
+				addr = null;
+			}
+			sw = sw || null;
+			ne = ne || null;
+			var payload_arr = [];
 			for(var i = 0; i < pages; i ++ ) {
 				payload_arr[i] = {
 					'authenticity_token' : '',
 					'ajax' : 1,
 					'page': i + 1,
-					'sw' : String(box['sw']),
-					'ne' : String(box['ne']),
+					'addr' : addr,
+					'sw' : sw,
+					'ne' : ne,
 				}; 
 			}
+			
 			async.map(payload_arr, getFoodSpot, function(error, results) {
 				sightings = []
 				for (var item in results) {
