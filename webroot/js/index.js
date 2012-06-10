@@ -352,14 +352,6 @@ function nextImage(vector){
 	return max_item; 
 }
 
-function getMap(lat, lng) {
-	var loc = lat + "," + lng;
-	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" 
-	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" 
-	+ loc + "&sensor=true";
-	return url;
-  }
-
 function setLocal (key, value){
 	if(typeof(Storage)!=="undefined") {
 		localStorage[key] = value;
@@ -389,9 +381,21 @@ function makeWantTip(){
 	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
 	html +=makeTumblrButton();
 	return html
- 
-
 }
+
+function getMap(lat, lng) {
+	var loc = lat + "," + lng;
+	var url = "http://maps.googleapis.com/maps/api/staticmap?center=" 
+	+ loc + "&zoom=6&size=400x400&markers=color:red%7Clabel:S%7C" 
+	+ loc + "&sensor=true";
+	return url;
+  }
+
+  function getYelp(biz_name, city) {
+	var url = 'http://www.yelp.com/search?find_desc='+biz_name
+	+'&find_loc=' + city; 
+	return url;
+  }
 
 function makeTumblrButton(){
 	var tumblr_photo_source = CURRENT_ITEM.photo,
