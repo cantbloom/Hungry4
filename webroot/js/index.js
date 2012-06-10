@@ -5,6 +5,8 @@ $(function(){
 	USER_VECTOR = [.5,.5,.5,.5,.5,.5,.5];
 	NUM_POS_VOTES = 0;
 	CURRENT_ITEM = {};
+	UNVIEWED_COUNT = 0;
+	CURRENT_PAGE = 1;
 	$photoContainer = $('#photo-container').fadeOut(0);
 	$locContainer = $('#location-container');
 	$locInput = $('#location');
@@ -32,7 +34,10 @@ $(function(){
 	})
 
 	$searchButton.click(function(){
-		locationResponse($locInput.val());
+		locationResponse($locInput.val(), function(results){
+			foodResponse(results);
+			loadNext();
+		});
 	})
 
 	$upVote.click(function(){
@@ -104,11 +109,14 @@ function getRatio(item, callback){
 }
 
 function getFood(payload, callback){
-	var pages = 1; //number of pages to be returned
-	payload.pages = pages;
+	payload.page_start = CURRENT_PAGE,
+	CURRENT_PAGE += 1;
+	payload.page_end = CURRENT_PAGE;
+
 	payload.radius = $('.radius-option.selected').attr('value');
+
 	$.get('/foodMe', payload, function(res){
-		console.log(res.length);
+		UNVIEWED_COUNT += res.length
 		async.map(res, getRatio, function(err,results){
 			console.log('count done')
 			callback(results);
@@ -117,8 +125,8 @@ function getFood(payload, callback){
 }
 
 function foodResponse(results){
-	FOOD = results
-	loadNext()
+	FOOD = FOOD.concat(results);
+	console.log(UNVIEWED_COUNT);
 }
 
 function getLocation(callback){
@@ -140,7 +148,7 @@ function getLocation(callback){
 	}
 }
 
-function locationResponse(loc){
+function locationResponse(loc, callback){
 	var payload = {};
 
 	if (typeof loc == 'string'){
@@ -149,7 +157,7 @@ function locationResponse(loc){
 		payload.lat = loc[0];
 		payload.lng = loc[1];
 	}
-	getFood(payload, foodResponse)
+	getFood(payload, callback);
 }
 
 function transitionToImages(){
@@ -159,13 +167,24 @@ function transitionToImages(){
 
 function loadNext(){
 	var item = nextImage(USER_VECTOR);
+	
 	item.viewed = true;
+	UNVIEWED_COUNT -= 1;
+
+
+
 	swapPhoto(item);
 
 	if ($photoContainer.css('display') == 'none'){
 		transitionToImages();
 	}
-		
+
+	//get more images
+	if (UNVIEWED_COUNT<=10){
+		locationResponse($locInput.val(), function(results){
+			foodResponse(results);
+		});
+	}	
 }
 
 function swapPhoto(item){
