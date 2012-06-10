@@ -218,12 +218,11 @@ function getFoodSpot(payload, callback) {
   			}
   			else {
   				console.log("no sightings :(");
+  			}
   			callback(null, json);
   			}
   		});
 	}
-
-}
 
 
 foodMe("San Francisco", null, null, 1, 5, 1, function(results){

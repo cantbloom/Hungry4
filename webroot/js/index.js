@@ -290,7 +290,7 @@ function nextImage(vector){
 	return max_item; 
 }
 
-function getMap(lat, lng) {
+function getMap(lat, lng, biz_name) {
     var myOptions = {
       center: new google.maps.LatLng(lat, lng),
       zoom: 8,
@@ -298,6 +298,12 @@ function getMap(lat, lng) {
     };
     var map = new google.maps.Map(document.getElementById("map_canvas"),
         myOptions);
+
+    var marker = new google.maps.Marker({
+	    position: LatLng(lat, lng, false),
+	    map: map,
+	    title: biz_name
+	  });
   }
 
 function setLocal (key, value){
