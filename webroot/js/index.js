@@ -38,11 +38,12 @@ $(function(){
 
 function getGoogleCount(query, callback){
 	//todo: caching
-	/*if (inCache) {
-		getFromCache(query);
-		callback(value);
+	var inCache = true;
+	if (inCache) {
+		//getFromCache(query);
+		callback(Math.random());
 		return;
-	}*/
+	}
 
 	$.ajax({
 	   type: 'GET',
@@ -68,7 +69,7 @@ function getRatio(item, callback){
 	var query = item.dish,
 	flavors = ['spicy'/*, 'meaty', 'ethnic', 'savory', 'fish'*/].map(function(item){return query + ' ' + item});
 	flavors.unshift(query) 
-
+	console.log(callback)
 	async.map(flavors, getGoogleCount, function(err, results){
     	if (err != null){
     		return
@@ -90,6 +91,7 @@ function getFood(payload, callback){
 	payload.pages = pages;
 	payload.radius = $('.radius-option.selected').attr('value');
 	$.get('/foodMe', payload, function(res){
+		console.log(res.length);
 		async.map(res, getRatio, function(err,results){
 			callback(results);
 		})
