@@ -15,6 +15,7 @@ $(function(){
 	$useCurrentButton = $('#useCurrentLocation');
 	$voteContainer = $('#vote-container');
 	$currentPhoto = $('#current-photo');
+	$preload = $('#preload');
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
@@ -28,7 +29,6 @@ $(function(){
 		$this = $(this);
 		$('.radius-option.selected').removeClass('selected');
 		$this.addClass('selected');
-		
 	})
 
 	$useCurrentButton.click(function(){
@@ -50,7 +50,6 @@ $(function(){
 			NUM_POS_VOTES += 1;
 			updateUserVector(CURRENT_ITEM.ratio)
 			$voteContainer.addClass('disabled')
-			$currentPhoto.fadeOut(0)
 			loadNext();
 		}
 	})
@@ -59,14 +58,16 @@ $(function(){
 		if (!$voteContainer.hasClass('disabled')){
 			CURRENT_ITEM.vote = 0 // 0 for down
 			$voteContainer.addClass('disabled')
-			$currentPhoto.fadeOut(0)
 			loadNext();
 		}
 	})
 
-	$currentPhoto.load(function(){
-		$currentPhoto.fadeIn()
-		$voteContainer.removeClass('disabled')
+	$preload.load(function(){
+		$currentPhoto.fadeOut(50, function(){
+			$currentPhoto.attr('src', CURRENT_ITEM.photo).fadeIn(50, function(){
+				$voteContainer.removeClass('disabled')
+			});
+		})	
 	})
 
 	$want.click(function(){
@@ -313,9 +314,8 @@ function loadNext(){
 
 function swapPhoto(item){
 	CURRENT_ITEM = item;
-	$currentPhoto.attr('src', item.photo);
+	$preload.attr('src', item.photo);
 	$photoCaption.html('The "'+item.dish+'"');
-	$currentPhoto.css('backgroundImage', 'url('+item.photo+')')
 }
 
 function dotProduct (v1, v2){
