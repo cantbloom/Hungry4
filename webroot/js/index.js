@@ -17,7 +17,7 @@ $(function(){
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
-	$choose = $('#choose');
+	$want = $('#want');
 	$bg = $('#bg');
 	
 
@@ -53,9 +53,55 @@ $(function(){
 		loadNext();
 	})
 
-	$choose.click(function(){
+	$want.click(function(){
 		//loadItem(CURRENT_ITEM);
 	})
+
+	//tips!
+	$useCurrentButton.qtip({
+		content: 'Use your current location',
+		position: {corner: {target: 'bottomMiddle',tooltip: 'topMiddle'}},
+		style: {name: 'dark', tip: 'topMiddle'} //cream, dark, green, light, red, blue
+ 	});
+
+ 	$upVote.qtip({
+		content: 'Yum, show me more food like this',
+		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
+		style: {name: 'green',tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
+ 	});
+
+ 	$downVote.qtip({
+		content: 'Let\'s try something else, please',
+		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
+		style: {name: 'red',tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
+ 	});
+
+ 	$want.qtip({
+		content: 'Get directions to this exact dish',
+		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
+		style: {name: 'dark', tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
+ 	});
+
+ 	$('#walk').qtip({
+		content: 'Search ~5 blocks around you',
+		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
+		style: {name: 'dark', tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
+ 	});
+
+ 	$('#bike').qtip({
+		content: 'Search 2 miles around you',
+		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
+		style: {name: 'dark', tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
+ 	});
+
+ 	$('#drive').qtip({
+		content: 'Search 5 miles around you',
+		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
+		style: {name: 'dark', tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
+ 	});
+
+
+
 })
 
 function getGoogleCount(query, callback){
