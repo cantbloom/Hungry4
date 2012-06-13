@@ -267,7 +267,7 @@ function getFood(payload, callback){
 
 function foodResponse(results){
 	FOOD = FOOD.concat(results);
-	console.log(UNVIEWED_COUNT);
+	//console.log(UNVIEWED_COUNT);
 }
 
 function getLocation(callback){
