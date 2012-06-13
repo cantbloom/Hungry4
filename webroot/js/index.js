@@ -259,7 +259,7 @@ function getFood(payload, callback){
 	$.get('/foodMe', payload, function(res){
 		UNVIEWED_COUNT += res.length
 		async.map(res, getRatio, function(err,results){
-			console.log('count done')
+			//console.log('count done')
 			callback(results);
 		})
 	})
