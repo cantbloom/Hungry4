@@ -114,7 +114,7 @@ function addrFrmlatLng(lat, lng, callback) {
 	request({url: URL }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var json = JSON.parse(response.body);
-			console.log(json);
+			//console.log(json);
 			var addr;
 			if(json['status'] != 'OVER_QUERY_LIMIT' ) {
 				addr = json["results"][0]["formatted_address"];

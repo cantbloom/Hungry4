@@ -28,21 +28,15 @@ $(function(){
 		$this = $(this);
 		$('.radius-option.selected').removeClass('selected');
 		$this.addClass('selected');
-	})
+	});
 
 	$useCurrentButton.click(function(){
 		getLocation(function(latLong){
 			$locInput.val(latLong);
 		});
-	})
+	});
 
-	$searchButton.click(function(){
-		$locContainer.fadeOut();
-		locationResponse($locInput.val(), function(results){
-			foodResponse(results);
-			loadNext();
-		});
-	})
+	$searchButton.click(search);
 
 	$upVote.click(function(){
 		if (!$voteContainer.hasClass('disabled')){
@@ -52,7 +46,7 @@ $(function(){
 			$voteContainer.addClass('disabled')
 			loadNext();
 		}
-	})
+	});
 
 	$downVote.click(function(){
 		if (!$voteContainer.hasClass('disabled')){
@@ -60,23 +54,23 @@ $(function(){
 			$voteContainer.addClass('disabled')
 			loadNext();
 		}
-	})
+	});
+
+	$searchButton.bind("nullSearch", function(){
+		});
 
 	$bg.load(function(){
 		$bg.fadeIn(500);
-	})
+	});
 
 	$preload.load(function(){
 		$currentPhoto.fadeOut(50, function(){
 			$currentPhoto.attr('src', CURRENT_ITEM.photo).fadeIn(50, function(){
 				$voteContainer.removeClass('disabled')
 			});
-		})	
-	})
+		});
+	});
 
-	$want.click(function(){
-		//loadItem(CURRENT_ITEM);
-	})
 	var src = "../static/images/bg" + Math.floor((Math.random()*10)+1) + ".jpg";
 	$bg.attr('src', src);
 
@@ -130,7 +124,7 @@ $(function(){
 				corner: 'center' // ...at the center of the viewport
 			},
 			show: {
-				when: 'click', // Show it on click
+				when: 'nullSearch', // Show it on click
 				solo: true // And hide all other tooltips
 			},
 			hide: false,
@@ -177,6 +171,46 @@ $(function(){
 			}
 		}
 	});
+	
+	$searchButton.qtip(
+		{
+			content: {
+				title: {
+					text: "Try another location!",
+					button: 'Close'
+				},
+				text: "We couldn't find any results ;(",
+			},
+			position: {
+				target: $(document.body), // Position it via the document body...
+				corner: 'center' // ...at the center of the viewport
+			},
+			show: {
+				when : 'nullSearch',
+				solo: true // And hide all other tooltips
+			},
+			hide : false, 
+			style: {
+				width: { max: 500 },
+				padding: '50px',
+				border: {
+					width: 9,
+					radius: 9,
+					color: '#666666'
+				},
+				name: 'light'
+			},
+			api: {
+				beforeShow: function(){
+				// Fade in the modal "blanket" using the defined show speed
+				$('#overlay').fadeIn(this.options.show.effect.length);
+				},
+				beforeHide: function(){
+				// Fade out the modal "blanket" using the defined hide speed
+				$('#overlay').fadeOut(this.options.hide.effect.length);
+			}
+		}
+	});
 
  	$('#walk').qtip({
 		content: 'Search ~5 blocks around you',
@@ -197,6 +231,16 @@ $(function(){
  	});
 
 })
+
+function search() {
+	locationResponse($locInput.val(), function(results){
+		if(results != null ) {
+			$locContainer.fadeOut();
+			foodResponse(results);
+			loadNext(); 
+		}
+	});
+}
 
 function getGoogleCount(query, callback){
 	callback(null, Math.random());
@@ -257,17 +301,25 @@ function getFood(payload, callback){
 	payload.radius = $('.radius-option.selected').attr('value');
 
 	$.get('/foodMe', payload, function(res){
-		UNVIEWED_COUNT += res.length
-		async.map(res, getRatio, function(err,results){
-			console.log('count done')
-			callback(results);
-		})
+		if(res[0] == null) {
+			$searchButton.trigger("nullSearch");
+			callback(null);
+			return
+		}
+		else {
+			UNVIEWED_COUNT += res.length
+			async.map(res, getRatio, function(err,results){
+				//console.log('count done')
+				callback(results);
+				return
+			})
+		}
 	})
 }
 
 function foodResponse(results){
 	FOOD = FOOD.concat(results);
-	console.log(UNVIEWED_COUNT);
+	//console.log(UNVIEWED_COUNT);
 }
 
 function getLocation(callback){
@@ -312,8 +364,6 @@ function loadNext(){
 	
 	item.viewed = true;
 	UNVIEWED_COUNT -= 1;
-
-
 
 	swapPhoto(item);
 
