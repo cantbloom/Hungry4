@@ -314,7 +314,7 @@ function getFood(payload, callback){
 				return
 			})
 		}
-	})
+	});
 }
 
 function foodResponse(results){
