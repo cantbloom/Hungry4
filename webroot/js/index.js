@@ -51,6 +51,10 @@ $(function(){
 	$searchButton.bind("nullSearch", function(){
 		});
 
+	$('#searchAgain').click(function() {
+		document.location.href="/";
+	});
+
 	$upVote.click(function(){
 		if (!$voteContainer.hasClass('disabled')){
 			CURRENT_ITEM.vote = 1 // 1 for up
