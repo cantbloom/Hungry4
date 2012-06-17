@@ -69,10 +69,6 @@ $(function(){
 		}
 	});
 
-	$("#searchAgain").click(function() {
-	   document.location.href="/";
-	  });
-
 	$bg.load(function(){
 		$bg.fadeIn(500);
 	});

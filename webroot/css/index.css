@@ -284,8 +284,8 @@ button:active,#vote-container>div:active,.radius-option:active,#search:active{
 
 #searchAgain{
 	position: absolute;
-	left: 102%;
-	top: 523px;
+	left: 103%;
+	top: 35px;
 	cursor: pointer;
 	vertical-align: center;
 	font-size:20px;
@@ -298,11 +298,13 @@ button:active,#vote-container>div:active,.radius-option:active,#search:active{
 	-ms-border-radius: 5px;
 	-o-border-radius: 5px;
 	border-radius: 5px;
+	-webkit-box-shadow: 0 0 10px 
+	rgba(0, 0, 0, 0.6);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+	box-shadow: 0 0 10px 
+	rgba(0, 0, 0, 0.6);
 }
 
-#searchAgain.hover {
-	color:black;
-}
 
 #bg {
 	/* Set rules to fill background */
