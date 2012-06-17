@@ -21,7 +21,8 @@ $(function(){
 	$downVote = $('#vote-down');
 	$map = $('#map');
 	$want = $('#want');
-	$bg = $('#bg').fadeOut(0);
+	$bg = $('#bg');
+	$load = $('#load');
 	
 
 	////////EVENT HANDLERS//////////
@@ -39,6 +40,13 @@ $(function(){
 	});
 
 	$searchButton.click(search);
+
+	$locInput.keypress(function(e) {
+		var code = (e.keyCode ? e.keyCode : e.which);
+		 if(code == 13) { 
+		 	search();
+ 		}
+	});
 
 	$searchButton.bind("nullSearch", function(){
 		});
@@ -133,23 +141,22 @@ $(function(){
 				$('#overlay').fadeIn(this.options.show.effect.length);
 				$('#modal-title').html(CURRENT_ITEM.title);
 				//tumblr button
+				share_caption = CURRENT_ITEM.title +' from Hungry4'
 				var tumblr_photo_source = CURRENT_ITEM.photo,
-				tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
 				tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
 				href = "http://www.tumblr.com/share/photo?source=" 
 				+ encodeURIComponent(tumblr_photo_source) + "&caption=" 
-				+ encodeURIComponent(tumblr_photo_caption) + "&click_thru=" 
+				+ encodeURIComponent(share_caption) + "&click_thru=" 
 				+ encodeURIComponent(tumblr_photo_click_thru);
 				$('#tumblrButton').attr('href', href);
-
-				//twitter
-				var twitter_text = CURRENT_ITEM.title +' from Hungry4';
-				$('#twitterButton').attr('data-url', CURRENT_ITEM.photo).attr('data-text', twitter_text);
-
+				// //twitter
+				// $('#twitterButton').attr('data-url', CURRENT_ITEM.photo).attr('data-text', share_caption);
 				
 				//gogole maps
 				var src = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng);
 				$('#map_img').attr('src', src);
+				
+				//yelp
 				var href = 'http://www.yelp.com/search?find_desc='+ CURRENT_ITEM.place
 						+ '&find_loc=' + $(CURRENT_ITEM.address).text();
 				$('#yelpButton').attr('href', href);
@@ -223,8 +230,11 @@ $(function(){
 
 function search() {
 	$locContainer.fadeOut();
+	$bg.fadeOut();
+	$load.fadeIn();
 	locationResponse($locInput.val(), function(results){
 		if(results != null ) {
+			$load.fadeOut();
 			foodResponse(results);
 			loadNext(); 
 		}
@@ -293,6 +303,8 @@ function getFood(payload, callback){
 		if(res[0] == null) {
 			$searchButton.trigger("nullSearch");
 			$locContainer.fadeIn();
+			$bg.fadeIn();
+			$load.fadeOut();
 			callback(null);
 			return
 		}
@@ -345,7 +357,6 @@ function locationResponse(loc, callback){
 
 function transitionToImages(){
 	$locContainer.fadeOut();
-	$bg.fadeOut();
 	$photoContainer.fadeIn();
 	$('#searchAgain').fadeIn();
 }
@@ -427,7 +438,6 @@ function nextImage(vector){
 function setLocal (key, value){
 	if(typeof(Storage)!=="undefined") {
 		localStorage[key] = value;
-		
 		return true
 
 	} else {
@@ -452,8 +462,9 @@ function makeWantTip(){
 	html = ""
 	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
 	html += makeTumblrButton();
-	html += makeYelpButton();
 	//html +=makeTwitterButton();
+	//html += makeFacebookButton();
+	html += makeYelpButton();
 	return html
 }
 
@@ -472,18 +483,15 @@ function makeYelpButton() {
 	}
 
 function makeTumblrButton(){
-	var tumblr_photo_source = CURRENT_ITEM.photo,
-	tumblr_photo_caption = CURRENT_ITEM.title +' from Hungry4',
-	tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
-	href = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent(tumblr_photo_source) + "&caption=" + encodeURIComponent(tumblr_photo_caption) + "&click_thru=" + encodeURIComponent(tumblr_photo_click_thru),
 	title = "Share on Tumblr",
 	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;";
-
-	//console.log(tumblr_photo_source);
-	return '<a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a>   '
+	return '<a id="tumblrButton" target="_blank" href="" title="'+title+'" style="'+style+'">Share on Tumblr</a>   '
 }
 
 function makeTwitterButton(){
-	var text = CURRENT_ITEM.title +' from Hungry4';
-	return '<a id="twitterButton" href="https://twitter.com/share" class="twitter-share-button" data-url="'+CURRENT_ITEM.photo+'" data-text="'+text+'" data-via="Hungry4App">Tweet</a>'
+	return '<a id = "twitterButton" href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text="never changes" data-size="large">Tweet</a>' +
+	 '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+}
+function makeFacebookButton() {
+	return '<div class="fb-like" data-href="" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend" data-font="trebuchet ms"></div>';
 }
