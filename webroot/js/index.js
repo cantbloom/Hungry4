@@ -24,6 +24,8 @@ $(function(){
 	$bg = $('#bg').fadeOut(0);
 	
 
+	////////EVENT HANDLERS//////////
+
 	$radiusOptions.click(function(){
 		$this = $(this);
 		$('.radius-option.selected').removeClass('selected');
@@ -37,6 +39,9 @@ $(function(){
 	});
 
 	$searchButton.click(search);
+
+	$searchButton.bind("nullSearch", function(){
+		});
 
 	$upVote.click(function(){
 		if (!$voteContainer.hasClass('disabled')){
@@ -56,8 +61,9 @@ $(function(){
 		}
 	});
 
-	$searchButton.bind("nullSearch", function(){
-		});
+	$("#searchAgain").click(function() {
+	   document.location.href="/";
+	  });
 
 	$bg.load(function(){
 		$bg.fadeIn(500);
@@ -74,7 +80,7 @@ $(function(){
 	var src = "../static/images/bg" + Math.floor((Math.random()*10)+1) + ".jpg";
 	$bg.attr('src', src);
 
-	//tips!
+	////////////tips!/////////////
 	$useCurrentButton.qtip({
 		content: 'Use your current location.',
 		position: {corner: {target: 'bottomMiddle',tooltip: 'topMiddle'}},
@@ -93,23 +99,6 @@ $(function(){
 		style: {name: 'red',tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
  	});
 
-/* 	$want.qtip({
-		content: makeWantTip(),
-		position: {corner: {target: 'topMiddle',tooltip: 'bottomMiddle'}},
-		style: {name: 'dark', tip: 'bottomMiddle',width: { max: 500}}, //cream, dark, green, light, red, blue
-		solo: true,
-		show: 'click',
-   		hide: 'click',
-   		api: {
-			beforeShow: function(){
-				
-
-				//map
-				var mapSrc = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng, CURRENT_ITEM.title);
-
-			}	 
-	    }
- 	});*/
 	$want.qtip(
 		{
 			content: {
@@ -124,7 +113,7 @@ $(function(){
 				corner: 'center' // ...at the center of the viewport
 			},
 			show: {
-				when: 'nullSearch', // Show it on click
+				when: 'click', // Show it on click
 				solo: true // And hide all other tooltips
 			},
 			hide: false,
@@ -233,9 +222,9 @@ $(function(){
 })
 
 function search() {
+	$locContainer.fadeOut();
 	locationResponse($locInput.val(), function(results){
 		if(results != null ) {
-			$locContainer.fadeOut();
 			foodResponse(results);
 			loadNext(); 
 		}
@@ -303,6 +292,7 @@ function getFood(payload, callback){
 	$.get('/foodMe', payload, function(res){
 		if(res[0] == null) {
 			$searchButton.trigger("nullSearch");
+			$locContainer.fadeIn();
 			callback(null);
 			return
 		}
@@ -357,6 +347,7 @@ function transitionToImages(){
 	$locContainer.fadeOut();
 	$bg.fadeOut();
 	$photoContainer.fadeIn();
+	$('#searchAgain').fadeIn();
 }
 
 function loadNext(){
