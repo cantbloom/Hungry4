@@ -38,9 +38,9 @@
 	left:0px;
 	padding:20px;
 	width:580px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 	background-color: rgba(50,50,50, .8);
 	z-index:100;
 }
@@ -339,15 +339,8 @@ button:active,#vote-container>div:active,.radius-option:active,#search:active{
 	opacity: 0.7;
 }
 
-#yelpLogo {
-	margin:2px;
-	vertical-align: middle;
-	padding: 4px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	a:link {text-decoration:none;}
-	a:visited {text-decoration:none;}
-	a:hover {text-decoration:none;}
-	a:active {text-decoration:none;}
+.share {
+	float:left;
+	padding: 10px 5px 5px 5px;
 }
+

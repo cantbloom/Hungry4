@@ -48,8 +48,7 @@ $(function(){
  		}
 	});
 
-	$searchButton.bind("nullSearch", function(){
-		});
+	$searchButton.bind("nullSearch", function(){});
 
 	$('#searchAgain').click(function() {
 		document.location.href="/";
@@ -107,66 +106,47 @@ $(function(){
 		style: {name: 'red',tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
  	});
 
-	$want.qtip(
-		{
-			content: {
-				title: {
-					text: '<span id="modal-title">'+CURRENT_ITEM.title+'</span>',
-					button: 'Close'
-				},
-				text: makeWantTip()
+ 	$want.click(makeWantBox);
+ 	$want.bind("showWant", function(){});
+
+ 	$want.qtip({
+		content: {
+			title: {
+				text: '<span id="modal-title">'+CURRENT_ITEM.title+'</span>',
+				button: 'Close'
 			},
-			position: {
-				target: $(document.body), // Position it via the document body...
-				corner: 'center' // ...at the center of the viewport
+			text: makeWantTip()
+		},
+		position: {
+			target: $(document.body), // Position it via the document body...
+			corner: 'center' // ...at the center of the viewport
+		},
+		show: {
+			when: 'showWant', // Show it on click
+			solo: true // And hide all other tooltips
+		},
+		hide: false,
+		style: {
+			width: { max: 500 },
+			padding: '14px',
+			border: {
+				width: 9,
+				radius: 9,
+				color: '#666666'
 			},
-			show: {
-				when: 'click', // Show it on click
-				solo: true // And hide all other tooltips
-			},
-			hide: false,
-			style: {
-				width: { max: 500 },
-				padding: '14px',
-				border: {
-					width: 9,
-					radius: 9,
-					color: '#666666'
-				},
-				name: 'light'
-			},
-			api: {
-				beforeShow: function(){
+			name: 'light'
+		},
+		api: {
+			beforeShow: function(){
 				// Fade in the modal "blanket" using the defined show speed
 				$('#overlay').fadeIn(this.options.show.effect.length);
-				$('#modal-title').html(CURRENT_ITEM.title);
-				//tumblr button
-				share_caption = CURRENT_ITEM.title +' from Hungry4'
-				var tumblr_photo_source = CURRENT_ITEM.photo,
-				tumblr_photo_click_thru = 'http://Hungry4.herokuapp.com',
-				href = "http://www.tumblr.com/share/photo?source=" 
-				+ encodeURIComponent(tumblr_photo_source) + "&caption=" 
-				+ encodeURIComponent(share_caption) + "&click_thru=" 
-				+ encodeURIComponent(tumblr_photo_click_thru);
-				$('#tumblrButton').attr('href', href);
-				// //twitter
-				// $('#twitterButton').attr('data-url', CURRENT_ITEM.photo).attr('data-text', share_caption);
-				
-				//gogole maps
-				var src = getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng);
-				$('#map_img').attr('src', src);
-				
-				//yelp
-				var href = 'http://www.yelp.com/search?find_desc='+ CURRENT_ITEM.place
-						+ '&find_loc=' + $(CURRENT_ITEM.address).text();
-				$('#yelpButton').attr('href', href);
 			},
 			beforeHide: function(){
 				// Fade out the modal "blanket" using the defined hide speed
 				$('#overlay').fadeOut(this.options.hide.effect.length);
-			}
-		}
-	});
+			},
+	}
+});
 	
 	$searchButton.qtip(
 		{
@@ -226,7 +206,7 @@ $(function(){
 		style: {name: 'dark', tip: 'bottomMiddle'} //cream, dark, green, light, red, blue
  	});
 
-})
+});
 
 function search() {
 	$locContainer.fadeOut();
@@ -458,13 +438,19 @@ function getLocal(key){
 	}
 }
 
+function makeWantBox() {
+	$want.trigger('showWant');
+	$want.qtip('api').updateTitle(CURRENT_ITEM.title);
+	$want.qtip('api').updateContent(makeWantTip(), false);
+}
+
 function makeWantTip(){
 	html = ""
-	html +='<div id="map" style="width:400px; height:400px"><img id="map_img"></div>'
-	html += makeTumblrButton();
-	//html +=makeTwitterButton();
-	//html += makeFacebookButton();
+	html +='<div id="map" style="width:400px; height:400px"><img id="map_img" src="'+
+	getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng)+'"></div>'
 	html += makeYelpButton();
+	html += makeTumblrButton();
+	html +=makeTwitterButton();		
 	return html
 }
 
@@ -477,21 +463,28 @@ function getMap(lat, lng) {
   }
 
 function makeYelpButton() {
-	return '<a id="yelpButton" target="_blank" href="">' +
+	return '<div class = "share"> <a id="yelpButton" target="_blank" href="">' +
 			'<img id = "yelpLogo" src = "/static/images/yelpLogo.png" >' +
-			'</a>'
+			'</a></div>'
 	}
 
 function makeTumblrButton(){
-	title = "Share on Tumblr",
-	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;";
-	return '<a id="tumblrButton" target="_blank" href="" title="'+title+'" style="'+style+'">Share on Tumblr</a>   '
+	var title = "Share on Tumblr",
+	style = "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;",
+	share_caption = CURRENT_ITEM.title +' from Hungry4'
+	photo_source = CURRENT_ITEM.photo,
+	photo_click_thru = 'http://Hungry4.herokuapp.com',
+	href = "http://www.tumblr.com/share/photo?source=" 
+	+ encodeURIComponent(photo_source) + "&caption=" 
+	+ encodeURIComponent(share_caption) + "&click_thru=" 
+	+ encodeURIComponent(photo_click_thru);
+	return '<div class = "share"> <a id="tumblrButton" target="_blank" href="'+href+'" title="'+title+'" style="'+style+'">Share on Tumblr</a></div>'
 }
 
 function makeTwitterButton(){
-	return '<a id = "twitterButton" href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text="never changes" data-size="large">Tweet</a>' +
+	var share_caption = CURRENT_ITEM.title +' from Hungry4'			
+	return '<div class="share"> <a id = "twitterButton" href="https://twitter.com/share" class="twitter-share-button"data-text="'+ 
+	share_caption+'" data-count = "hungry4.herokuapp.com" data-hashtags="Hungry4App" >Tweet</a></div>' +
 	 '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
 }
-function makeFacebookButton() {
-	return '<div class="fb-like" data-href="" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend" data-font="trebuchet ms"></div>';
-}
+
