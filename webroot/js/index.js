@@ -335,6 +335,7 @@ function locationResponse(loc, callback){
 
 function transitionToImages(){
 	$locContainer.fadeOut();
+	$bg.fadeOut();
 	$photoContainer.fadeIn();
 	$('#searchAgain').fadeIn();
 }
