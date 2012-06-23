@@ -15,7 +15,6 @@ $(function(){
 	$useCurrentButton = $('#useCurrentLocation');
 	$voteContainer = $('#vote-container');
 	$currentPhoto = $('#current-photo');
-	$preload = $('#preload');
 	$photoCaption = $('#photo-caption');
 	$upVote = $('#vote-up');
 	$downVote = $('#vote-down');
@@ -73,15 +72,14 @@ $(function(){
 	});
 
 	$bg.load(function(){
-		$bg.fadeIn(500);
+		if ($photoContainer.css('display') == 'none'){
+			$bg.fadeIn(500);
+		}
 	});
 
-	$preload.load(function(){
-		$currentPhoto.fadeOut(50, function(){
-			$currentPhoto.attr('src', CURRENT_ITEM.photo).fadeIn(50, function(){
-				$voteContainer.removeClass('disabled')
-			});
-		});
+	$currentPhoto.load(function(){
+		$photoCaption.html('The "'+CURRENT_ITEM.dish+'"');
+		$voteContainer.removeClass('disabled');
 	});
 
 	var src = "../static/images/bg" + Math.floor((Math.random()*10)+1) + ".jpg";
@@ -337,6 +335,7 @@ function locationResponse(loc, callback){
 
 function transitionToImages(){
 	$locContainer.fadeOut();
+	$bg.fadeOut();
 	$photoContainer.fadeIn();
 	$('#searchAgain').fadeIn();
 }
@@ -363,8 +362,8 @@ function loadNext(){
 
 function swapPhoto(item){
 	CURRENT_ITEM = item;
-	$preload.attr('src', item.photo);
-	$photoCaption.html('The "'+item.dish+'"');
+	$currentPhoto.attr('src', item.photo);
+	$photoCaption.html('');
 }
 
 function dotProduct (v1, v2){
