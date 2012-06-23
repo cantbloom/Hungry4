@@ -463,7 +463,9 @@ function getMap(lat, lng) {
   }
 
 function makeYelpButton() {
-	return '<div class = "share"> <a id="yelpButton" target="_blank" href="">' +
+	var href = 'http://www.yelp.com/search?find_desc='+ CURRENT_ITEM.place
+						+ '&find_loc=' + $(CURRENT_ITEM.address).text();
+	return '<div class = "share"> <a id="yelpButton" target="_blank" href="'+href+'">' +
 			'<img id = "yelpLogo" src = "/static/images/yelpLogo.png" >' +
 			'</a></div>'
 	}

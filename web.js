@@ -89,7 +89,7 @@ function latLngFrmAddr(addr, callback) {
 	request({url: URL }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var json = JSON.parse(response.body);
-			console.log(json);
+			//console.log(json);
 			if(json['status'] != 'OVER_QUERY_LIMIT' ) {
 				loc = json["results"][0]["geometry"]["location"]; 
 				latLng = [ loc["lat"], loc["lng"] ];
