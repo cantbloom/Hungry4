@@ -251,23 +251,26 @@ function getGoogleCount(query, callback){
 }
 
 function getRatio(item, callback){
-	var query = item.dish,
-	flavors = ['spicy', 'meat', 'fish', 'ethnic', 'breakfast', 'lunch', 'dinner', 'hipster'].map(function(item){return query + ' ' + item});
-	flavors.unshift(query) 
+	if (item != null) {
+		var query = item.dish,
+		flavors = ['spicy', 'meat', 'fish', 'ethnic', 'breakfast', 'lunch', 'dinner', 'hipster'].map(function(item){return query + ' ' + item});
+		flavors.unshift(query) 
 
-	async.map(flavors, getGoogleCount, function(err, results){
-    	if (err != null){
-    		return
-    	}
-    	var total = results.shift();
-    	results = results.map(function(item){
-    		return item/total;
-    	})
-    	item.ratio = results;
-    	if (callback){
-    		callback(null,item)
-    	}
-	});
+		async.map(flavors, getGoogleCount, function(err, results){
+	    	if (err != null){
+	    		return
+	    	}
+	    	var total = results.shift();
+	    	results = results.map(function(item){
+	    		return item/total;
+	    	})
+	    	item.ratio = results;
+	    	if (callback){
+	    		callback(null,item)
+	    	}
+		});
+	}
+	
 }
 
 function getFood(payload, callback){

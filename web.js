@@ -41,7 +41,6 @@ app.get('/foodMe', function(request, response) {
 		response.writeHead(200, {
 			'Content-Type': 'application/json'
 		});
-		//console.log(JSON.stringify(results));
 		response.write(JSON.stringify(results));
 		response.end();
 	});
@@ -168,11 +167,11 @@ function foodMe(addr, lat, lng, page_start, page_end, radius, callback) {
 			sw = sw || null;
 			ne = ne || null;
 			var payload_arr = [];
-			for(var i = 0; i < page_end; i ++ ) {
+			for(var i = page_start; i < page_end; i ++ ) {
 				payload_arr[i] = {
 					'authenticity_token' : '',
 					'ajax' : 1,
-					'page': i + page_start,
+					'page': i,
 					'addr' : addr,
 					'sw' : sw,
 					'ne' : ne,
