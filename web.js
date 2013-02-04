@@ -202,12 +202,11 @@ function getFoodSpot(payload, callback) {
   			if (sightings != null ) {
   				for (var item in sightings) {
   					sightings[item].photo = sightings[item].current_review.thumb_590;
-  					sightings[item].dish = sightings[item].item.name
+  					sightings[item].dish = sightings[item].item.name;
   					sightings[item].place = sightings[item].place.name;
   					sightings[item].lat = sightings[item].place.latitude;
   					sightings[item].lng = sightings[item].place.longitude;
-  					sightings[item].address = sightings[item].place.street_address + "," sightings[item].place.city + "," sightings[item].place.state;
-  					console.log(sightings[item]);
+  					sightings[item].address = sightings[item].place.street_address + "," + sightings[item].place.city + "," + sightings[item].place.state;
   				}
 
   			}
