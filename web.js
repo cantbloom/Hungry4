@@ -196,31 +196,30 @@ function foodMe(addr, lat, lng, page_start, page_end, radius, callback) {
 function getFoodSpot(payload, callback) {
 	var regex = /Sightings \= (\[\{.*\}\])/;
 	//console.log("http://www.foodspotting.com/explore?" + querystring.stringify(payload));
-	var req = request.get({url: "http://www.foodspotting.com/explore?" + querystring.stringify(payload) }, function (error, response, body) {
+	var req = request.get({url: "http://www.foodspotting.com/api/v1/sightings.json?api_key=88jrlU7j4HsTnnVNciqhfZbXd6vgPmVU9gbu46Mh&" + querystring.stringify(payload) }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-  			var sightings = body.match(regex);
+  			sightings = JSON.parse(body).data.sightings
   			if (sightings != null ) {
-  				sightings = sightings[1]
-  				var json = JSON.parse(sightings);
-  				for (var item in json) {
-  					json[item].photo = json[item].photo.replace('thumb_90', 'thumb_600');
-  					var dishAndPlace = json[item].title.split(' @ ');
-  					json[item].dish = dishAndPlace[0];
-  					json[item].place = dishAndPlace[1];
-  					//console.log(json[item]);
+  				for (var item in sightings) {
+  					sightings[item].photo = sightings[item].current_review.thumb_590;
+  					sightings[item].dish = sightings[item].item.name;
+  					sightings[item].place = sightings[item].place.name;
+  					sightings[item].lat = sightings[item].place.latitude;
+  					sightings[item].lng = sightings[item].place.longitude;
+  					sightings[item].address = sightings[item].place.street_address + "," + sightings[item].place.city + "," + sightings[item].place.state;
   				}
 
   			}
   			else {
   				console.log("no sightings :(");
   			}
-  			callback(null, json);
+  			callback(null, sightings);
   			}
   		});
 	}
 
 
-foodMe("San Francisco", null, null, 1, 5, 1, function(results){
+foodMe("Cambridge, MA", null, null, 1, 5, 1, function(results){
 	SF_CACHE = results;
 });
 // latLngFrmAddr("641 ofarrel st san francisoc, ca", function(latLng) {

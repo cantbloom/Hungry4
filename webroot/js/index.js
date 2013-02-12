@@ -439,17 +439,18 @@ function getLocal(key){
 
 function makeWantBox() {
 	$want.trigger('showWant');
-	$want.qtip('api').updateTitle(CURRENT_ITEM.title);
+	$want.qtip('api').updateTitle(CURRENT_ITEM.dish + " @ " + CURRENT_ITEM.place);
 	$want.qtip('api').updateContent(makeWantTip(), false);
 }
 
 function makeWantTip(){
 	html = ""
 	html +='<div id="map" style="width:400px; height:400px"><img id="map_img" src="'+
-	getMap(CURRENT_ITEM.lat, CURRENT_ITEM.lng)+'"></div>'
+	getMap(CURRENT_ITEM.latitude, CURRENT_ITEM.longitude)+'"></div>'
 	html += makeYelpButton();
 	html += makeTumblrButton();
 	html +=makeTwitterButton();		
+	console.log(CURRENT_ITEM)
 	return html
 }
 
