@@ -9,9 +9,9 @@ Demo at: http://hungry4.herokuapp.com/
 ## Authors
 
 **Josh Blum**
-+ joshblum@mit.edu
-+ @blumua
++ [joshblum@mit.edu](mailto:joshblum@mit.edu)
++ [@blumua](https://twitter.com/blumua)
 
 **Max Kanter**
-+ kanter@mit.edu
-+ @maxk
++ [kanter@mit.edu](mailto:kanter@mit.edu)
++ [@maxk](https://twitter.com/maxk)
